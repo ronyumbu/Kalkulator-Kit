@@ -8,18 +8,18 @@ Proyek aplikasi android sederhana pakai Flutter.
 
 ## ✨ Fitur Utama
 
-### ⚖️ Kalkulator BMI
-- Pilih jenis kelamin (Pria/Wanita) dengan avatar gambar
-- Input tinggi badan (cm) dan berat badan (kg)
-- Validasi input (wajib dan angka)
-- Hasil BMI ditampilkan dalam dialog custom beserta kategorinya
-- Kategori: Underweight, Normal, Overweight, Obese (warna sesuai kategori)
-
 ### ⛽ Kalkulator BBM
 - Hitung biaya bahan bakar berdasarkan jarak, efisiensi, dan harga
 - Input biaya tambahan (tol, parkir)
 - Format mata uang Rupiah otomatis
 - Dialog hasil yang informatif
+
+### ⚖️ Kalkulator BMI
+- Pilih jenis kelamin (Pria/Wanita) dengan avatar gambar
+- Input tinggi badan (cm) dan berat badan (kg)
+- Validasi input (wajib dan angka)
+- Hasil BMI ditampilkan dalam dialog custom beserta kategorinya
+- Kategori (Bahasa Indonesia): Kekurangan Berat Badan, Normal, Kelebihan Berat Badan, Obesitas (warna sesuai kategori)
 
 ### 📱 Kalkulator Kuota
 - Hitung batas penggunaan kuota harian
@@ -98,13 +98,13 @@ lib/
 
 ## 🎯 Usage Example
 
-### Kalkulator BMI
-- **Input**: Pria, Tinggi 170 cm, Berat 65 kg
-- **Output**: BMI ≈ 22.5, Kategori: Normal (warna hijau)
-
 ### Kalkulator BBM
 - **Input**: Jarak 100km, efisiensi 12km/L, harga Rp15.000/L
 - **Output**: Total biaya, biaya per km, breakdown detail
+
+### Kalkulator BMI
+- **Input**: Pria, Tinggi 170 cm, Berat 65 kg
+- **Output**: BMI ≈ 22.5, Kategori: Normal (warna hijau)
 
 ### Kalkulator Kuota  
 - Tanpa input opsional:

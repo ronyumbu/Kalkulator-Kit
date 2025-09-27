@@ -21,9 +21,9 @@ Aplikasi ini dirancang dengan Material Design 3, hamburger menu yang konsisten, 
 - **Dialog Cantik**: Hasil dalam popup dengan header bergradient
 
 ### ⚖️ Kalkulator BMI
-- **Input**: Jenis kelamin (Pria/Wanita), Tinggi (cm), Berat (kg)
+- **Input**: Jenis kelamin (Pria/Wanita) dengan avatar, Tinggi (cm), Berat (kg)
 - **Validasi**: Wajib diisi dan angka
-- **Hasil**: Nilai BMI dan kategori (Underweight, Normal, Overweight, Obese)
+- **Hasil**: Nilai BMI dan kategori (Bahasa Indonesia): Kekurangan Berat Badan, Normal, Kelebihan Berat Badan, Obesitas
 - **Dialog**: Popup hasil dengan warna sesuai kategori
 
 ### 📱 Kalkulator Kuota
@@ -118,6 +118,9 @@ lib/
 - ✅ **iOS**: iPhone & iPad
 - ✅ **Web**: PWA support
 - ✅ **Desktop**: Windows, macOS, Linux
+
+### Startup Experience
+- Layar awal polos berwarna hitam untuk menghilangkan kedipan dan mempercepat transisi ke aplikasi
 
 ## 💡 TIPS PENGGUNAAN
 
