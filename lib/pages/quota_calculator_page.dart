@@ -239,7 +239,7 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
                   ),
                   const SizedBox(height: 12),
                   const Text(
-                    'Kali ini buat itung berapa batas maksimal abisis kuota dalam 1 hari yawww',
+                    'Kalo ini buat itung berapa batas maksimal abisin kuota dalam 1 hari yawww',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,
