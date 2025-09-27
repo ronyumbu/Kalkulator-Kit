@@ -21,7 +21,6 @@ Proyek aplikasi android sederhana pakai Flutter.
 - Validasi input yang cerdas
 - Input opsional "Total Beli Kuota" untuk mendapatkan "Kuota Terpakai"
 - Dialog hasil akan menampilkan "Kuota Terpakai" jika input opsional diisi
-
 - Validasi input
 
 ### 🎨 UI/UX Modern
