@@ -8,6 +8,7 @@ Kalkulator Kit adalah aplikasi mobile yang menyediakan kalkulator-kalkulator uta
 1. **Kalkulator BBM** - Menghitung biaya bahan bakar perjalanan
 2. **Kalkulator Kuota** - Menghitung batas penggunaan kuota harian
 3. **Kalkulator Waktu** - Operasi waktu (tambah, kurang, kali, bagi)
+4. **Kalkulator BMI** - Menghitung indeks massa tubuh dan kategorinya
 
 Aplikasi ini dirancang dengan Material Design 3, hamburger menu yang konsisten, dan dialog hasil yang informatif.
 
@@ -18,6 +19,12 @@ Aplikasi ini dirancang dengan Material Design 3, hamburger menu yang konsisten, 
 - **Format Otomatis**: Angka dengan pemisah ribuan
 - **Hasil Detail**: Total biaya, biaya per km, breakdown lengkap
 - **Dialog Cantik**: Hasil dalam popup dengan header bergradient
+
+### ⚖️ Kalkulator BMI
+- **Input**: Jenis kelamin (Pria/Wanita), Tinggi (cm), Berat (kg)
+- **Validasi**: Wajib diisi dan angka
+- **Hasil**: Nilai BMI dan kategori (Underweight, Normal, Overweight, Obese)
+- **Dialog**: Popup hasil dengan warna sesuai kategori
 
 ### 📱 Kalkulator Kuota
 ### ⏱️ Kalkulator Waktu
@@ -62,16 +69,19 @@ lib/
 │   ├── fuel_calculator_page.dart
 │   ├── quota_calculator_page.dart
 │   ├── time_calculator_page.dart
+│   ├── bmi_calculator_page.dart
 │   └── about_page.dart
 ├── widgets/                     # Komponen UI
 │   ├── main_drawer.dart
 │   ├── fuel_result_dialog.dart
 │   ├── quota_result_dialog.dart
+│   ├── bmi_result_dialog.dart
 │   └── time_keypad.dart
 ├── services/                    # Business logic
 │   ├── calculation_service.dart
 │   ├── quota_calculation_service.dart
-│   └── time_calculation_service.dart
+│   ├── time_calculation_service.dart
+│   └── bmi_calculation_service.dart
 └── utils/                       # Utilities
     └── currency_formatter.dart
 ```
@@ -83,6 +93,12 @@ lib/
 - **CurrencyFormatter**: Format mata uang Rupiah
 
 ## 🧭 CARA PENGGUNAAN
+
+### ⚖️ Kalkulator BMI
+1. Pilih jenis kelamin: Pria atau Wanita
+2. Masukkan Tinggi (cm) dan Berat (kg)
+3. Tekan tombol "Hitung BMI"
+4. Lihat nilai BMI, kategori, dan warna indikator pada dialog
 
 ### ⛽ Kalkulator BBM
 1. **Input wajib**: Jarak (km), efisiensi (km/L), harga BBM

@@ -61,6 +61,18 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.monitor_weight, color: Colors.teal),
+            title: const Text(
+              'Kalkulator BMI',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Hitung indeks massa tubuh'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/bmi');
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.sim_card, color: Colors.green),
             title: const Text(
               'Kalkulator Kuota',

@@ -3,6 +3,7 @@ import 'pages/fuel_calculator_page.dart';
 import 'pages/quota_calculator_page.dart';
 import 'pages/about_page.dart';
 import 'pages/time_calculator_page.dart';
+import 'pages/bmi_calculator_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/fuel': (context) => const FuelCalculatorPage(),
         '/quota': (context) => const QuotaCalculatorPage(),
         '/time': (context) => const TimeCalculatorPage(),
+        '/bmi': (context) => const BMICalculatorPage(),
         '/about': (context) => const AboutPage(),
       },
     );
