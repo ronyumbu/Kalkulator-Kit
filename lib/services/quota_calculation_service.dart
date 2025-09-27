@@ -4,6 +4,7 @@ class QuotaCalculationService {
   static Map<String, String> validateInputs({
     required DateTime? expiryDate,
     required String quotaText,
+    String? totalPurchasedText,
     DateTime? currentDate,
   }) {
     Map<String, String> errors = {};
@@ -38,12 +39,26 @@ class QuotaCalculationService {
       }
     }
 
+    // Validate optional total purchased quota
+    if (totalPurchasedText != null && totalPurchasedText.trim().isNotEmpty) {
+      final total = double.tryParse(totalPurchasedText.replaceAll(',', '.'));
+      final remaining = double.tryParse(quotaText.replaceAll(',', '.'));
+      if (total == null) {
+        errors['totalPurchased'] = 'Masukkan total beli kuota yang valid';
+      } else if (total <= 0) {
+        errors['totalPurchased'] = 'Total beli kuota harus lebih dari 0';
+      } else if (remaining != null && total < remaining) {
+        errors['totalPurchased'] = 'Total beli kuota tidak boleh kurang dari sisa kuota';
+      }
+    }
+
     return errors;
   }
 
   static QuotaData? calculateQuota({
     required DateTime? expiryDate,
     required String quotaText,
+    String? totalPurchasedText,
     DateTime? currentDate,
   }) {
     if (expiryDate == null || quotaText.isEmpty) return null;
@@ -51,12 +66,21 @@ class QuotaCalculationService {
     double? quota = double.tryParse(quotaText.replaceAll(',', '.'));
     if (quota == null || quota <= 0) return null;
 
+    double? totalPurchased;
+    if (totalPurchasedText != null && totalPurchasedText.trim().isNotEmpty) {
+      final parsed = double.tryParse(totalPurchasedText.replaceAll(',', '.'));
+      if (parsed != null && parsed > 0) {
+        totalPurchased = parsed;
+      }
+    }
+
     DateTime useCurrentDate = currentDate ?? DateTime.now();
 
     return QuotaData(
       currentDate: useCurrentDate,
       expiryDate: expiryDate,
       remainingQuota: quota,
+      totalPurchasedQuota: totalPurchased,
     );
   }
 

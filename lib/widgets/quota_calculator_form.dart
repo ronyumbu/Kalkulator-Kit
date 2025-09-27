@@ -4,6 +4,7 @@ import '../services/quota_calculation_service.dart';
 
 class QuotaCalculatorForm extends StatefulWidget {
   final TextEditingController quotaController;
+  final TextEditingController? totalPurchasedController;
   final DateTime? selectedDate;
   final DateTime currentDate;
   final Map<String, String> errors;
@@ -15,6 +16,7 @@ class QuotaCalculatorForm extends StatefulWidget {
   const QuotaCalculatorForm({
     super.key,
     required this.quotaController,
+    this.totalPurchasedController,
     required this.selectedDate,
     required this.currentDate,
     required this.errors,
@@ -56,6 +58,10 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
             // Remaining Quota Input
             _buildQuotaField(),
             const SizedBox(height: 16),
+
+              // Optional Total Purchased Quota Input
+              _buildTotalPurchasedField(),
+              const SizedBox(height: 16),
 
             // Expiry Date (Date Picker)
             _buildExpiryDateField(),
@@ -225,6 +231,63 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
             suffixText: 'GB',
             suffixStyle: TextStyle(color: Colors.grey[700]),
             errorText: widget.errors['quota'],
+            filled: true,
+            fillColor: Colors.grey[50],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: Colors.grey[300]!),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: Colors.grey[300]!),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.blue, width: 2),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTotalPurchasedField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.shopping_cart, color: Colors.purple, size: 18),
+            const SizedBox(width: 8),
+            const Text(
+              'Total Beli Kuota (Opsional)',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: widget.totalPurchasedController,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onChanged: (value) => widget.onInputChanged?.call(),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+          ],
+          style: const TextStyle(color: Colors.black87, fontSize: 16),
+          decoration: InputDecoration(
+            hintText: 'Masukkan total kuota yang dibeli (GB)',
+            hintStyle: TextStyle(color: Colors.grey[600]),
+            suffixText: 'GB',
+            suffixStyle: TextStyle(color: Colors.grey[700]),
+            errorText: widget.errors['totalPurchased'],
             filled: true,
             fillColor: Colors.grey[50],
             border: OutlineInputBorder(

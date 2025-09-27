@@ -14,6 +14,7 @@ class QuotaCalculatorPage extends StatefulWidget {
 class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _quotaController = TextEditingController();
+  final TextEditingController _totalPurchasedController = TextEditingController();
   DateTime? _selectedDate;
   DateTime _currentDate = DateTime.now();
   Map<String, String> _errors = {};
@@ -21,6 +22,7 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
   @override
   void dispose() {
     _quotaController.dispose();
+    _totalPurchasedController.dispose();
     super.dispose();
   }
 
@@ -121,6 +123,7 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
       _errors = QuotaCalculationService.validateInputs(
         expiryDate: _selectedDate,
         quotaText: _quotaController.text,
+        totalPurchasedText: _totalPurchasedController.text,
         currentDate: _currentDate,
       );
     });
@@ -130,6 +133,7 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
       final result = QuotaCalculationService.calculateQuota(
         expiryDate: _selectedDate,
         quotaText: _quotaController.text,
+        totalPurchasedText: _totalPurchasedController.text,
         currentDate: _currentDate,
       );
 
@@ -150,6 +154,7 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
   void _resetForm() {
     setState(() {
       _quotaController.clear();
+      _totalPurchasedController.clear();
       _selectedDate = null;
       _currentDate = DateTime.now();
       _errors.clear();
@@ -250,6 +255,7 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
             // Form input section
             QuotaCalculatorForm(
               quotaController: _quotaController,
+              totalPurchasedController: _totalPurchasedController,
               selectedDate: _selectedDate,
               currentDate: _currentDate,
               errors: _errors,

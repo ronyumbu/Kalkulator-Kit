@@ -19,11 +19,13 @@ Proyek aplikasi android sederhana pakai Flutter.
 - Pilihan tanggal mulai fleksibel
 - Date picker untuk masa tenggang
 - Validasi input yang cerdas
+- Input opsional "Total Beli Kuota" untuk mendapatkan "Kuota Terpakai"
+- Dialog hasil akan menampilkan "Kuota Terpakai" jika input opsional diisi
 
 ### 🎨 UI/UX Modern
 - Material Design 3
 - Hamburger menu konsisten
-- Dialog popup yang cantik
+- Dialog popup
 - Responsive design
 
 ## 🏗️ Struktur Proyek
@@ -46,7 +48,7 @@ lib/
     └── currency_formatter.dart
 ```
 
-## � Quick Start
+## 🚀 Quick Start
 
 ### Yang saya gunakan
 - Flutter SDK 3.35.3
@@ -80,8 +82,12 @@ lib/
 - **Output**: Total biaya, biaya per km, breakdown detail
 
 ### Kalkulator Kuota  
-- **Input**: Sisa 10GB, masa tenggang 30 hari
-- **Output**: Batas penggunaan 0.33GB per hari
+- Tanpa input opsional:
+   - **Input**: Sisa 10GB, masa tenggang 30 hari
+   - **Output**: Batas penggunaan ~0.33GB per hari
+- Dengan input opsional:
+   - **Input**: Sisa 12GB, Total Beli Kuota 50GB, masa tenggang 30 hari
+   - **Output**: Batas penggunaan ~0.40GB per hari, dan "Kuota Terpakai" = 38GB
 
 ## 🧪 Testing
 

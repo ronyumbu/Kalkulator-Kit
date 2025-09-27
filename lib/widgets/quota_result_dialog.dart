@@ -95,6 +95,15 @@ class QuotaResultDialog extends StatelessWidget {
                       Icons.storage,
                       Colors.blue,
                     ),
+                    if (quotaData.usedQuota != null) ...[
+                      const SizedBox(height: 12),
+                      _buildDetailRow(
+                        'Kuota Terpakai',
+                        '${quotaData.usedQuota!.toStringAsFixed(1)} GB',
+                        Icons.outbox,
+                        Colors.purple,
+                      ),
+                    ],
                     const SizedBox(height: 12),
                     _buildDetailRow(
                       'Hari Tersisa',
