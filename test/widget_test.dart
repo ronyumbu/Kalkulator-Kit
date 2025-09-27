@@ -17,7 +17,7 @@ void main() {
       await tester.pumpWidget(const MyApp());
 
       // Verify that our main elements are present
-      expect(find.text('Kalkulator Biaya Bahan Bakar'), findsWidgets);
+  expect(find.text('Kalkulator BBM'), findsWidgets);
       expect(find.text('Hitung'), findsOneWidget);
       expect(find.text('Input Data Perjalanan'), findsOneWidget);
     });

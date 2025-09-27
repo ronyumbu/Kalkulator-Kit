@@ -72,6 +72,18 @@ class MainDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/quota');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.access_time, color: Colors.purple),
+            title: const Text(
+              'Kalkulator Waktu',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Operasi HH:MM'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/time');
+            },
+          ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.info_outline, color: Colors.orange),

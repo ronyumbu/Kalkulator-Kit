@@ -27,6 +27,7 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
@@ -44,8 +45,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Project specific files to ignore
-INFORMASI.md
+# Project docs should be tracked
+# (Hapus baris ignore sebelumnya untuk INFORMASI.md)
 
 # APK files
 *.apk
@@ -55,9 +56,11 @@ INFORMASI.md
 /ios/Runner.xcworkspace/xcuserdata/
 /ios/Runner.xcodeproj/xcuserdata/
 /ios/Flutter/flutter_export_environment.sh
+/ios/Flutter/ephemeral/
+# Generated xcconfig (di-generate ulang oleh Flutter)
+/ios/Flutter/Generated.xcconfig
 
-# Web specific
-/web/favicon.png
+# Web specific (jangan ignore asset bawaan)
 
 # Windows specific
 /windows/flutter/
@@ -71,6 +74,14 @@ windows/runner.exe
 
 # Linux specific
 /linux/flutter/
+
+# Android local config (berisi path SDK lokal)
+/android/local.properties
+
+# Signing files (jika ditambahkan)
+key.properties
+*.keystore
+*.jks
 
 # Generated files
 *.g.dart

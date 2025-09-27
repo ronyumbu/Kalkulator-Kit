@@ -23,6 +23,12 @@ Proyek aplikasi android sederhana pakai Flutter.
 - Dialog hasil akan menampilkan "Kuota Terpakai" jika input opsional diisi
 - Validasi input
 
+### ⏱️ Kalkulator Waktu
+- Operasi tambah, kurang, kali, bagi untuk waktu
+- Input rolling digit tanpa tanda ':' (contoh: 5 → 00:05 → 00:53 → 05:32)
+- Tampilan hasil otomatis mm:ss jika jam = 0, dan HH:MM:SS jika jam > 0
+- Keypad khusus dengan tombol angka, 00, dan operator
+
 ### 🎨 UI/UX Modern
 - Material Design 3
 - Hamburger menu konsisten
@@ -38,14 +44,17 @@ lib/
 ├── pages/                       # Halaman utama
 │   ├── fuel_calculator_page.dart
 │   ├── quota_calculator_page.dart
+│   ├── time_calculator_page.dart
 │   └── about_page.dart
 ├── widgets/                     # Komponen UI
 │   ├── main_drawer.dart
 │   ├── fuel_result_dialog.dart
+│   ├── time_keypad.dart
 │   └── quota_result_dialog.dart
 ├── services/                    # Business logic
 │   ├── calculation_service.dart
-│   └── quota_calculation_service.dart
+│   ├── quota_calculation_service.dart
+│   └── time_calculation_service.dart
 └── utils/                       # Utilities
     └── currency_formatter.dart
 ```
@@ -90,6 +99,10 @@ lib/
 - Dengan input opsional:
    - **Input**: Sisa 12GB, Total Beli Kuota 50GB, masa tenggang 30 hari
    - **Output**: Batas penggunaan ~0.40GB per hari, dan "Kuota Terpakai" = 38GB
+
+### Kalkulator Waktu
+- Contoh: 00:45 + 00:30 = 01:15
+- Hasil 00:30 akan ditampilkan sebagai 00:30 (mm:ss), sedangkan 01:02:03 tetap HH:MM:SS
 
 ## 🧪 Testing
 
