@@ -1,0 +1,100 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Project specific files to ignore
+INFORMASI.md
+
+# APK files
+*.apk
+*.aab
+
+# iOS specific
+/ios/Runner.xcworkspace/xcuserdata/
+/ios/Runner.xcodeproj/xcuserdata/
+/ios/Flutter/flutter_export_environment.sh
+
+# Web specific
+/web/favicon.png
+
+# Windows specific
+/windows/flutter/
+windows/CMakeFiles/
+windows/runner.exe
+
+# macOS specific
+/macos/Flutter/
+/macos/Runner.xcodeproj/xcuserdata/
+/macos/Runner.xcworkspace/xcuserdata/
+
+# Linux specific
+/linux/flutter/
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+
+# Firebase/Google Services (if added later)
+google-services.json
+GoogleService-Info.plist
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Local database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# IDE specific
+.vscode/settings.json
+.vscode/launch.json
