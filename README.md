@@ -18,14 +18,22 @@ Proyek aplikasi android sederhana pakai Flutter.
 - Hitung batas penggunaan kuota harian
 - Pilihan tanggal mulai fleksibel
 - Date picker untuk masa tenggang
+<<<<<<< HEAD
 - Validasi input yang cerdas
 - Input opsional "Total Beli Kuota" untuk mendapatkan "Kuota Terpakai"
 - Dialog hasil akan menampilkan "Kuota Terpakai" jika input opsional diisi
+=======
+- Validasi input
+>>>>>>> 9e8cb156c4ce5be2c9cd2e75841df8cdb33c8815
 
 ### 🎨 UI/UX Modern
 - Material Design 3
 - Hamburger menu konsisten
+<<<<<<< HEAD
 - Dialog popup
+=======
+- Dialog popup yang ok
+>>>>>>> 9e8cb156c4ce5be2c9cd2e75841df8cdb33c8815
 - Responsive design
 
 ## 🏗️ Struktur Proyek
