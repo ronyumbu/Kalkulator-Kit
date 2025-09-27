@@ -18,12 +18,12 @@ Proyek aplikasi android sederhana pakai Flutter.
 - Hitung batas penggunaan kuota harian
 - Pilihan tanggal mulai fleksibel
 - Date picker untuk masa tenggang
-- Validasi input yang cerdas
+- Validasi input
 
 ### 🎨 UI/UX Modern
 - Material Design 3
 - Hamburger menu konsisten
-- Dialog popup yang cantik
+- Dialog popup yang ok
 - Responsive design
 
 ## 🏗️ Struktur Proyek
