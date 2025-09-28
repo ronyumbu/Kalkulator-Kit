@@ -19,6 +19,9 @@ class QuotaResultDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xFF1C1C1C)
+          : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: const EdgeInsets.all(16),
       child: Container(
@@ -79,17 +82,20 @@ class QuotaResultDialog extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Details Section
-                    const Text(
+                    Text(
                       'Rincian Kuota',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black87,
                       ),
                     ),
                     const SizedBox(height: 16),
 
                     _buildDetailRow(
+                      context,
                       'Sisa Kuota',
                       '${quotaData.remainingQuota.toStringAsFixed(1)} GB',
                       Icons.storage,
@@ -98,6 +104,7 @@ class QuotaResultDialog extends StatelessWidget {
                     if (quotaData.usedQuota != null) ...[
                       const SizedBox(height: 12),
                       _buildDetailRow(
+                        context,
                         'Kuota Terpakai',
                         '${quotaData.usedQuota!.toStringAsFixed(1)} GB',
                         Icons.outbox,
@@ -106,6 +113,7 @@ class QuotaResultDialog extends StatelessWidget {
                     ],
                     const SizedBox(height: 12),
                     _buildDetailRow(
+                      context,
                       'Hari Tersisa',
                       '${quotaData.daysRemaining} hari',
                       Icons.calendar_today,
@@ -113,6 +121,7 @@ class QuotaResultDialog extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     _buildDetailRow(
+                      context,
                       'Masa Tenggang',
                       QuotaCalculationService.formatDate(quotaData.expiryDate),
                       Icons.event,
@@ -126,7 +135,9 @@ class QuotaResultDialog extends StatelessWidget {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.grey[100],
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? const Color(0xFF2C2C2C)
+                            : Colors.grey[100],
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -134,7 +145,9 @@ class QuotaResultDialog extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.green[600],
+                              color: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.green[400]
+                                  : Colors.green[600],
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Icon(
@@ -153,7 +166,9 @@ class QuotaResultDialog extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.black54,
+                                    color: Theme.of(context).brightness == Brightness.dark
+                                        ? Colors.white70
+                                        : Colors.black54,
                                     letterSpacing: 0.5,
                                   ),
                                 ),
@@ -163,7 +178,9 @@ class QuotaResultDialog extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.green[700],
+                                    color: Theme.of(context).brightness == Brightness.dark
+                                        ? Colors.green[300]
+                                        : Colors.green[700],
                                   ),
                                 ),
                               ],
@@ -207,6 +224,7 @@ class QuotaResultDialog extends StatelessWidget {
   }
 
   Widget _buildDetailRow(
+    BuildContext context,
     String label,
     String value,
     IconData icon,
@@ -219,15 +237,22 @@ class QuotaResultDialog extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(fontSize: 14, color: Colors.black87),
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[300]
+                  : Colors.black87,
+            ),
           ),
         ),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Colors.black87,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black87,
           ),
         ),
       ],

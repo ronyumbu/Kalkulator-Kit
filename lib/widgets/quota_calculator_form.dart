@@ -35,18 +35,23 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
+      color: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xFF2C2C2C)
+          : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Input Data Kuota',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
             const SizedBox(height: 20),
@@ -83,12 +88,14 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
           children: [
             const Icon(Icons.today, color: Colors.blue, size: 18),
             const SizedBox(width: 8),
-            const Text(
+            Text(
               'Tanggal Mulai',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
             const Spacer(),
@@ -111,18 +118,31 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
-              color: widget.onCurrentDateSelect != null 
-                  ? Colors.grey[50] 
-                  : Colors.grey[100],
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? (widget.onCurrentDateSelect != null 
+                      ? const Color(0xFF404040) 
+                      : const Color(0xFF2C2C2C))
+                  : (widget.onCurrentDateSelect != null 
+                      ? Colors.grey[50] 
+                      : Colors.grey[100]),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey[300]!),
+              border: Border.all(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xFF555555)
+                    : Colors.grey[300]!,
+              ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   QuotaCalculationService.formatDate(widget.currentDate),
-                  style: const TextStyle(fontSize: 16, color: Colors.black87),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black87,
+                  ),
                 ),
                 if (widget.onCurrentDateSelect != null)
                   const Icon(Icons.calendar_today, color: Colors.grey, size: 18),
@@ -142,12 +162,14 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
           children: [
             const Icon(Icons.event, color: Colors.orange, size: 18),
             const SizedBox(width: 8),
-            const Text(
+            Text(
               'Tanggal Masa Tenggang',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
           ],
@@ -159,12 +181,16 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
-              color: Colors.grey[50],
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color(0xFF404040)
+                  : Colors.grey[50],
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: widget.errors.containsKey('expiryDate')
                     ? Colors.red
-                    : Colors.grey[300]!,
+                    : (Theme.of(context).brightness == Brightness.dark
+                        ? const Color(0xFF555555)
+                        : Colors.grey[300]!),
               ),
             ),
             child: Row(
@@ -177,11 +203,20 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
                   style: TextStyle(
                     fontSize: 16,
                     color: widget.selectedDate != null
-                        ? Colors.black87
-                        : Colors.grey[600],
+                        ? (Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black87)
+                        : (Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[400]
+                            : Colors.grey[600]),
                   ),
                 ),
-                const Icon(Icons.calendar_today, color: Colors.grey),
+                Icon(
+                  Icons.calendar_today, 
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.grey[400]
+                      : Colors.grey,
+                ),
               ],
             ),
           ),
@@ -206,12 +241,14 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
           children: [
             const Icon(Icons.sim_card, color: Colors.green, size: 18),
             const SizedBox(width: 8),
-            const Text(
+            Text(
               'Sisa Kuota',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
           ],
@@ -224,15 +261,30 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
           ],
-          style: const TextStyle(color: Colors.black87, fontSize: 16),
+          style: TextStyle(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black87,
+            fontSize: 16,
+          ),
           decoration: InputDecoration(
             hintText: 'Masukkan sisa kuota dalam GB',
-            hintStyle: TextStyle(color: Colors.grey[600]),
+            hintStyle: TextStyle(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[400]
+                  : Colors.grey[600],
+            ),
             suffixText: 'GB',
-            suffixStyle: TextStyle(color: Colors.grey[700]),
+            suffixStyle: TextStyle(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[300]
+                  : Colors.grey[700],
+            ),
             errorText: widget.errors['quota'],
             filled: true,
-            fillColor: Colors.grey[50],
+            fillColor: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF2C2C2C)
+                : Colors.grey[50],
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: Colors.grey[300]!),
@@ -263,12 +315,14 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
           children: [
             const Icon(Icons.shopping_cart, color: Colors.purple, size: 18),
             const SizedBox(width: 8),
-            const Text(
+            Text(
               'Total Beli Kuota (Opsional)',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
           ],
@@ -281,15 +335,30 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
           ],
-          style: const TextStyle(color: Colors.black87, fontSize: 16),
+          style: TextStyle(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black87,
+            fontSize: 16,
+          ),
           decoration: InputDecoration(
             hintText: 'Masukkan total kuota yang dibeli (GB)',
-            hintStyle: TextStyle(color: Colors.grey[600]),
+            hintStyle: TextStyle(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[400]
+                  : Colors.grey[600],
+            ),
             suffixText: 'GB',
-            suffixStyle: TextStyle(color: Colors.grey[700]),
+            suffixStyle: TextStyle(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[300]
+                  : Colors.grey[700],
+            ),
             errorText: widget.errors['totalPurchased'],
             filled: true,
-            fillColor: Colors.grey[50],
+            fillColor: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF2C2C2C)
+                : Colors.grey[50],
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: Colors.grey[300]!),

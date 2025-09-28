@@ -23,6 +23,9 @@ class CalculationResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
+      color: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xFF2C2C2C)
+          : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -35,22 +38,28 @@ class CalculationResult extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.green[100],
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.green[800]?.withOpacity(0.3)
+                        : Colors.green[100],
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Icons.receipt_long,
-                    color: Colors.green[700],
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.green[300]
+                        : Colors.green[700],
                     size: 24,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Hasil',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black87,
                   ),
                 ),
               ],
@@ -62,6 +71,7 @@ class CalculationResult extends StatelessWidget {
               children: [
                 Expanded(
                   child: _buildResultCard(
+                    context,
                     title: 'Total Biaya',
                     value: CurrencyFormatter.formatCurrencyNoDecimal(totalCost),
                     color: Colors.blue,
@@ -71,6 +81,7 @@ class CalculationResult extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: _buildResultCard(
+                    context,
                     title: 'Biaya per km',
                     value: CurrencyFormatter.formatCurrency(costPerKm),
                     color: Colors.orange,
@@ -83,17 +94,20 @@ class CalculationResult extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Breakdown section
-            const Text(
+            Text(
               'Rincian Biaya',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
             const SizedBox(height: 12),
 
             _buildBreakdownItem(
+              context,
               'Biaya Bahan Bakar',
               CurrencyFormatter.formatCurrencyNoDecimal(fuelCost),
               Icons.local_gas_station,
@@ -102,6 +116,7 @@ class CalculationResult extends StatelessWidget {
 
             if (tollCost > 0)
               _buildBreakdownItem(
+                context,
                 'Biaya Tol',
                 CurrencyFormatter.formatCurrencyNoDecimal(tollCost),
                 Icons.toll,
@@ -110,6 +125,7 @@ class CalculationResult extends StatelessWidget {
 
             if (parkingCost > 0)
               _buildBreakdownItem(
+                context,
                 'Biaya Parkir',
                 CurrencyFormatter.formatCurrencyNoDecimal(parkingCost),
                 Icons.local_parking,
@@ -122,24 +138,38 @@ class CalculationResult extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.green[50],
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.green[800]?.withOpacity(0.2)
+                    : Colors.green[50],
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.green[200]!),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.green[600]!
+                      : Colors.green[200]!,
+                ),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.person, color: Colors.green[700], size: 24),
+                  Icon(
+                    Icons.person, 
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.green[300]
+                        : Colors.green[700], 
+                    size: 24,
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Total Biaya per Orang',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: Colors.black87,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white70
+                                : Colors.black87,
                           ),
                         ),
                         Text(
@@ -149,7 +179,9 @@ class CalculationResult extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.green[700],
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.green[300]
+                                : Colors.green[700],
                           ),
                         ),
                       ],
@@ -164,7 +196,8 @@ class CalculationResult extends StatelessWidget {
     );
   }
 
-  Widget _buildResultCard({
+  Widget _buildResultCard(
+    BuildContext context, {
     required String title,
     required String value,
     required Color color,
@@ -187,7 +220,9 @@ class CalculationResult extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[600],
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[400]
+                  : Colors.grey[600],
             ),
           ),
           const SizedBox(height: 4),
@@ -205,6 +240,7 @@ class CalculationResult extends StatelessWidget {
   }
 
   Widget _buildBreakdownItem(
+    BuildContext context,
     String title,
     String value,
     IconData icon,
@@ -219,15 +255,22 @@ class CalculationResult extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
+              style: TextStyle(
+                fontSize: 14, 
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white70
+                    : Colors.black87,
+              ),
             ),
           ),
           Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black87,
             ),
           ),
         ],

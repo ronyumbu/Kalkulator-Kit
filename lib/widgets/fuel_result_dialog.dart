@@ -55,6 +55,9 @@ class FuelResultDialog extends StatelessWidget {
     final fuelNeeded = distance / efficiency;
     
     return Dialog(
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xFF1C1C1C)
+          : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: const EdgeInsets.all(16),
       child: Container(
@@ -115,12 +118,14 @@ class FuelResultDialog extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Details Section
-                    const Text(
+                    Text(
                       'Rincian Biaya',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black87,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -180,7 +185,9 @@ class FuelResultDialog extends StatelessWidget {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.grey[100],
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? const Color(0xFF2C2C2C)
+                            : Colors.grey[100],
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
@@ -190,7 +197,9 @@ class FuelResultDialog extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.blue[600],
+                                  color: Theme.of(context).brightness == Brightness.dark
+                                      ? Colors.blue[400]
+                                      : Colors.blue[600],
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: const Icon(
@@ -209,7 +218,9 @@ class FuelResultDialog extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black54,
+                                        color: Theme.of(context).brightness == Brightness.dark
+                                            ? Colors.grey[400]
+                                            : Colors.black54,
                                         letterSpacing: 0.5,
                                       ),
                                     ),
@@ -219,7 +230,9 @@ class FuelResultDialog extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.blue[700],
+                                        color: Theme.of(context).brightness == Brightness.dark
+                                            ? Colors.blue[300]
+                                            : Colors.blue[700],
                                       ),
                                     ),
                                   ],
@@ -232,9 +245,15 @@ class FuelResultDialog extends StatelessWidget {
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).brightness == Brightness.dark
+                                  ? const Color(0xFF2C2C2C)
+                                  : Colors.white,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.grey[300]!),
+                              border: Border.all(
+                                color: Theme.of(context).brightness == Brightness.dark
+                                    ? const Color(0xFF404040)
+                                    : Colors.grey[300]!,
+                              ),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,7 +262,9 @@ class FuelResultDialog extends StatelessWidget {
                                   'Biaya per km:',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.black87,
+                                    color: Theme.of(context).brightness == Brightness.dark
+                                        ? Colors.grey[300]
+                                        : Colors.black87,
                                   ),
                                 ),
                                 Text(
@@ -251,7 +272,9 @@ class FuelResultDialog extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.black87,
+                                    color: Theme.of(context).brightness == Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black87,
                                   ),
                                 ),
                               ],
@@ -300,25 +323,34 @@ class FuelResultDialog extends StatelessWidget {
     IconData icon,
     Color color,
   ) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: 18),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            label,
-            style: const TextStyle(fontSize: 14, color: Colors.black87),
+    return Builder(
+      builder: (context) => Row(
+        children: [
+          Icon(icon, color: color, size: 18),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey[300]
+                    : Colors.black87,
+              ),
+            ),
           ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black87,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -320,9 +320,15 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xFF2C2C2C)
+                    : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey[300]!),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF404040)
+                      : Colors.grey[300]!,
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -340,10 +346,12 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
                     _formatSecondsForResult(
                       TimeCalculationService.parseToSeconds(_result),
                     ),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
                     ),
                   ),
                   if (_error != null) ...[
@@ -426,9 +434,11 @@ class _ExpressionDisplay extends StatelessWidget {
     }
     return Text(
       text,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 20,
-        color: Colors.black87,
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.grey[300]
+            : Colors.black87,
       ),
       textAlign: TextAlign.right,
     );

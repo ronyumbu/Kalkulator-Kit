@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import '../services/calculation_service.dart';
+import '../services/settings_service.dart';
 import '../widgets/fuel_calculator_form.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/fuel_result_dialog.dart';
@@ -40,7 +43,18 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
     return double.tryParse(value.replaceAll('.', '')) ?? 0.0;
   }
 
+  // Helper function to trigger vibration if enabled
+  void _triggerVibration() {
+    final settings = context.read<SettingsService>();
+    if (settings.vibrationFeedback) {
+      HapticFeedback.lightImpact();
+    }
+  }
+
   void _calculateCosts() {
+    // Trigger vibration feedback
+    _triggerVibration();
+    
     setState(() {
       // Validate inputs
       _errors = CalculationService.validateInputs(
@@ -114,6 +128,9 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
   }
 
   void _resetForm() {
+    // Trigger vibration feedback
+    _triggerVibration();
+    
     setState(() {
       _distanceController.clear();
       _efficiencyController.clear();

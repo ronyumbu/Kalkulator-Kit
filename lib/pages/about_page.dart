@@ -76,22 +76,26 @@ class AboutPage extends StatelessWidget {
                       children: [
                         Icon(Icons.description, color: Colors.blue[600]),
                         const SizedBox(width: 8),
-                        const Text(
+                        Text(
                           'Deskripsi',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black87,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black87,
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 12),
-                    const Text(
+                    Text(
                       'Aplikasi ni tak kasi nama Kalkulator kit aja yakk, biar simpel aowkaowk',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black87,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[300]
+                            : Colors.black87,
                         height: 1.5,
                       ),
                     ),
@@ -118,22 +122,26 @@ class AboutPage extends StatelessWidget {
                       children: [
                         Icon(Icons.code, color: Colors.purple[600]),
                         const SizedBox(width: 8),
-                        const Text(
+                        Text(
                           'Informasi Developer',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black87,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black87,
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 12),
-                    const Text(
+                    Text(
                       'Aplikasi ini dikembangin pakek Flutter yang pakek desain Material Design 3. dibuat karna gabut dan lagi belajar flutter pakek bantuan AI wkwkwkwkwkwkwk.',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black87,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[300]
+                            : Colors.black87,
                         height: 1.5,
                       ),
                     ),

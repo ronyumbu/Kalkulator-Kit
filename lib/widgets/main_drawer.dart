@@ -98,6 +98,18 @@ class MainDrawer extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
+            leading: const Icon(Icons.settings, color: Colors.grey),
+            title: const Text(
+              'Pengaturan',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Tema dan pengaturan umum'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/settings');
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.info_outline, color: Colors.orange),
             title: const Text(
               'Tentang Aplikasi',

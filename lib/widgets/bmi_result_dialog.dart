@@ -108,7 +108,15 @@ class BMIResultDialog extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Text('BMI:', style: TextStyle(fontSize: 16, color: Colors.black87)),
+                        Text(
+                          'BMI:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[300]
+                                : Colors.black87,
+                          ),
+                        ),
                         const SizedBox(width: 8),
                         Text(
                           bmi.toStringAsFixed(1),
@@ -123,7 +131,15 @@ class BMIResultDialog extends StatelessWidget {
                     const SizedBox(height: 12),
                     Row(
                       children: [
-                        const Text('Kategori:', style: TextStyle(fontSize: 16, color: Colors.black87)),
+                        Text(
+                          'Kategori:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[300]
+                                : Colors.black87,
+                          ),
+                        ),
                         const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -146,7 +162,7 @@ class BMIResultDialog extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     // Simple legend (Indonesian)
-                    Text('Klasifikasi Umum', style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.w600)),
+                    const Text('Klasifikasi Umum', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
                     _legendRow('Kekurangan Berat Badan', Colors.amber[700]!),
                     const SizedBox(height: 6),

@@ -289,10 +289,18 @@ class _GenderTile extends StatelessWidget {
         duration: const Duration(milliseconds: 180),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
-          color: selected ? selectedColor.withOpacity(0.12) : Colors.grey[50],
+          color: selected 
+              ? selectedColor.withOpacity(0.12) 
+              : (Theme.of(context).brightness == Brightness.dark
+                  ? const Color(0xFF2C2C2C)
+                  : Colors.grey[50]),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: selected ? selectedColor : baseBorder.color,
+            color: selected 
+                ? selectedColor 
+                : (Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xFF404040)
+                    : baseBorder.color),
             width: selected ? 2 : 1,
           ),
         ),
@@ -310,7 +318,15 @@ class _GenderTile extends StatelessWidget {
               label,
               softWrap: false,
               overflow: TextOverflow.fade,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: selected ? selectedColor : Colors.grey[800]),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: selected 
+                    ? selectedColor 
+                    : (Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[300]
+                        : Colors.grey[800]),
+              ),
             ),
           ],
         ),
@@ -347,9 +363,17 @@ class _Avatar extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white,
+        color: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF3C3C3C)
+            : Colors.white,
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 8, offset: const Offset(0, 2)),
+          BoxShadow(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.black.withOpacity(0.3)
+                : Colors.black.withOpacity(0.06),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
         ],
       ),
       alignment: Alignment.center,

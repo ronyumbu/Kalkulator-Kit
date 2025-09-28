@@ -37,10 +37,12 @@ class CustomTextField extends StatelessWidget {
             if (prefixIcon != null) ...[prefixIcon!, const SizedBox(width: 8)],
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
           ],
@@ -52,22 +54,45 @@ class CustomTextField extends StatelessWidget {
           enabled: enabled,
           onChanged: onChanged,
           inputFormatters: inputFormatters,
-          style: const TextStyle(color: Colors.black87, fontSize: 16),
+          style: TextStyle(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black87,
+            fontSize: 16,
+          ),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(color: Colors.grey[600]),
+            hintStyle: TextStyle(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[400]
+                  : Colors.grey[600],
+            ),
             suffixText: suffixText,
-            suffixStyle: TextStyle(color: Colors.grey[700]),
+            suffixStyle: TextStyle(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.grey[300]
+                  : Colors.grey[700],
+            ),
             errorText: errorText,
             filled: true,
-            fillColor: Colors.grey[50],
+            fillColor: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF2C2C2C)
+                : Colors.grey[50],
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey[300]!),
+              borderSide: BorderSide(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xFF404040)
+                    : Colors.grey[300]!,
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey[300]!),
+              borderSide: BorderSide(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xFF404040)
+                    : Colors.grey[300]!,
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

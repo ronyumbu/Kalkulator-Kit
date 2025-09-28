@@ -33,7 +33,7 @@ class TimeKeypad extends StatelessWidget {
           children: buttons.map((b) {
             final label = b.label;
             final value = b.mapTo ?? label;
-            final w = (label == 'AC' || label == 'C') ? wideWidth : cellWidth;
+            final w = (label == 'AC' || label == 'C' || label == '00') ? wideWidth : cellWidth;
             final isAC = label == 'AC';
             final sideColor = isAC ? Colors.red[600]! : Colors.grey[300]!;
             final ButtonStyle style = isAC
@@ -42,7 +42,9 @@ class TimeKeypad extends StatelessWidget {
                       if (states.contains(WidgetState.hovered)) {
                         return Colors.red[600]!;
                       }
-                      return Colors.white;
+                      return Theme.of(context).brightness == Brightness.dark
+                          ? const Color(0xFF2C2C2C)
+                          : Colors.white;
                     }),
                     foregroundColor: WidgetStateProperty.resolveWith((states) {
                       if (states.contains(WidgetState.hovered)) {
@@ -50,16 +52,28 @@ class TimeKeypad extends StatelessWidget {
                       }
                       return Colors.red[600]!;
                     }),
-                    side: WidgetStateProperty.all(BorderSide(color: sideColor)),
+                    side: WidgetStateProperty.all(BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.red[400]!
+                          : sideColor,
+                    )),
                     shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     elevation: const WidgetStatePropertyAll(0),
                   )
                 : ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: b.color ?? Colors.black87,
-                    side: BorderSide(color: sideColor),
+                    backgroundColor: Theme.of(context).brightness == Brightness.dark
+                        ? const Color(0xFF2C2C2C)
+                        : Colors.white,
+                    foregroundColor: b.color ?? (Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black87),
+                    side: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? const Color(0xFF404040)
+                          : sideColor,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -74,14 +88,17 @@ class TimeKeypad extends StatelessWidget {
                 child: Text(
                   label,
                   style: isAC
-                      ? const TextStyle(
+                      ? TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
+                          color: Colors.red[600]!,
                         )
                       : TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: b.color ?? Colors.black87,
+                          color: b.color ?? (Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black87),
                         ),
                 ),
               ),

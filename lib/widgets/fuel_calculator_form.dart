@@ -32,12 +32,14 @@ class FuelCalculatorForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Input Data Perjalanan',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
             const SizedBox(height: 20),
@@ -86,10 +88,12 @@ class FuelCalculatorForm extends StatelessWidget {
             ),
             Text(
               'Biaya Tambahan (Opsional)',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.black87,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
               ),
             ),
             const SizedBox(height: 16),

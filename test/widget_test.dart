@@ -8,13 +8,17 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kalkulator_bbm/main.dart';
 import 'package:kalkulator_bbm/services/calculation_service.dart';
+import 'package:kalkulator_bbm/services/settings_service.dart';
 import 'package:kalkulator_bbm/utils/currency_formatter.dart';
 
 void main() {
   group('Fuel Calculator Tests', () {
     testWidgets('App loads correctly', (WidgetTester tester) async {
+      // Create a settings service for testing
+      final settingsService = SettingsService();
+      
       // Build our app and trigger a frame.
-      await tester.pumpWidget(const MyApp());
+      await tester.pumpWidget(MyApp(settingsService: settingsService));
 
       // Verify that our main elements are present
   expect(find.text('Kalkulator BBM'), findsWidgets);
