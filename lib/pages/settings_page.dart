@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../services/settings_service.dart';
 import '../widgets/section_title.dart';
@@ -24,12 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  void _triggerVibration() {
-    final settings = context.read<SettingsService>();
-    if (settings.vibrationFeedback) {
-      HapticFeedback.lightImpact();
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,64 +65,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                   onChanged: (String? value) {
                     if (value != null) {
-                      _triggerVibration();
                       settings.setThemeMode(value);
                       _showSnackBar('Tema berhasil diubah');
                     }
                   },
                 ),
               ),
-
-              const Divider(height: 1),
-
-              // Pengaturan Umum Section
-              const SectionTitle(title: 'Pengaturan Umum'),
-
-              // Vibration Feedback
-              SwitchListTile(
-                secondary: Icon(
-                  Icons.vibration,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                title: const Text('Getaran'),
-                subtitle: const Text('Berikan getaran saat menekan tombol'),
-                value: settings.vibrationFeedback,
-                onChanged: (bool value) {
-                  if (value) {
-                    HapticFeedback.lightImpact();
-                  }
-                  settings.setVibrationFeedback(value);
-                  _showSnackBar(value 
-                    ? 'Getaran diaktifkan' 
-                    : 'Getaran dinonaktifkan'
-                  );
-                },
-                activeThumbColor: Theme.of(context).colorScheme.primary,
-              ),
-
-              const Divider(height: 1),
-
-              // Sound Effects
-              SwitchListTile(
-                secondary: Icon(
-                  Icons.volume_up,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                title: const Text('Efek Suara'),
-                subtitle: const Text('Putar suara saat interaksi dengan tombol'),
-                value: settings.soundEffects,
-                onChanged: (bool value) {
-                  _triggerVibration();
-                  settings.setSoundEffects(value);
-                  _showSnackBar(value 
-                    ? 'Efek suara diaktifkan' 
-                    : 'Efek suara dinonaktifkan'
-                  );
-                },
-                activeThumbColor: Theme.of(context).colorScheme.primary,
-              ),
-
-              const Divider(height: 1),
 
 
 
@@ -138,7 +80,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: OutlinedButton.icon(
                   onPressed: () async {
-                    _triggerVibration();
                     final bool? confirm = await showDialog<bool>(
                       context: context,
                       builder: (context) => AlertDialog(

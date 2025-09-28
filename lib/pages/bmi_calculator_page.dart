@@ -27,6 +27,7 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
   }
 
   void _onCalculate() {
+
     setState(() {
       _errors = BMICalculationService.validateInputs(
         gender: _gender,
@@ -35,6 +36,8 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
       );
     });
 
+    if (!mounted) return;
+
     if (_errors.isEmpty) {
       final height = double.parse(_heightController.text.replaceAll(',', '.'));
       final weight = double.parse(_weightController.text.replaceAll(',', '.'));
@@ -42,7 +45,9 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
       final category = BMICalculationService.getBMICategory(bmi);
       final color = BMICalculationService.getBMICategoryColor(bmi);
 
+      if (!mounted) return;
       FocusScope.of(context).unfocus();
+      
       BMIResultDialog.show(
         context,
         bmi: bmi,
@@ -51,6 +56,8 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
         gender: _gender == 'L' ? 'Pria' : 'Wanita',
       );
     } else {
+      
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Mohon periksa input yang sudah diisi'),
@@ -151,7 +158,7 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Hitung Indeks Massa Tubuh (Body Mass Index) Anda.',
+                    'Kalkulator untuk menghitung Indeks Massa Tubuh (Body Mass Index).',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,
@@ -290,7 +297,7 @@ class _GenderTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
           color: selected 
-              ? selectedColor.withOpacity(0.12) 
+              ? selectedColor.withValues(alpha: 0.12) 
               : (Theme.of(context).brightness == Brightness.dark
                   ? const Color(0xFF2C2C2C)
                   : Colors.grey[50]),
@@ -369,8 +376,8 @@ class _Avatar extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.black.withOpacity(0.3)
-                : Colors.black.withOpacity(0.06),
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.06),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),

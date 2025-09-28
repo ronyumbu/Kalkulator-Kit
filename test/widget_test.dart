@@ -20,10 +20,8 @@ void main() {
       // Build our app and trigger a frame.
       await tester.pumpWidget(MyApp(settingsService: settingsService));
 
-      // Verify that our main elements are present
-  expect(find.text('Kalkulator BBM'), findsWidgets);
-      expect(find.text('Hitung'), findsOneWidget);
-      expect(find.text('Input Data Perjalanan'), findsOneWidget);
+      // Initially should show splash screen
+      expect(find.text('Kalkulator Kit'), findsOneWidget);
     });
 
     group('CalculationService Tests', () {

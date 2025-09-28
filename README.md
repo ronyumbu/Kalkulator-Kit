@@ -8,13 +8,15 @@ Proyek aplikasi android sederhana pakai Flutter.
 
 ## ✨ Fitur Utama
 
-### 🎨 Splash Screen
-- Animasi fade in yang halus saat aplikasi dimulai
-- Background gradien biru yang menarik (Colors.blue[600] → Colors.blue[400])
-- Logo aplikasi dengan border putih tipis yang proporsional
-- Nama aplikasi "Kalkulator Kit" dengan typography yang elegan
-- Loading indicator dengan auto-navigation setelah 3 detik
-- Native splash screen configuration untuk pengalaman startup yang optimal
+### 🧮 Kalkulator Basic (Halaman Default)
+- Operasi matematika dasar: tambah (+), kurang (-), kali (×), bagi (÷)
+- Fitur lanjutan: toggle tanda (+/-), persentase (%), titik desimal (.)
+- Kontrol lengkap: Clear (C), delete (⌫), equals (=)
+- Layout profesional dalam grid 4x5 dengan card yang rapi
+- Format angka otomatis dengan pemisah ribuan
+- Area display kompak dengan preview operasi sebelumnya
+- Error handling untuk pembagian dengan nol
+- UI responsif tanpa scrolling, semua tombol terlihat
 
 ### ⛽ Kalkulator BBM
 - Hitung biaya bahan bakar berdasarkan jarak, efisiensi, dan harga
@@ -41,16 +43,15 @@ Proyek aplikasi android sederhana pakai Flutter.
 ### ⏱️ Kalkulator Waktu
 - Operasi tambah, kurang, kali, bagi untuk waktu
 - Input rolling digit tanpa tanda ':' (contoh: 5 → 00:05 → 00:53 → 05:32)
-- Tampilan hasil otomatis mm:ss jika jam = 0, dan HH:MM:SS jika jam > 0
+- Format dual result: menampilkan hasil 24+ jam dan jam standar (25:50 dan 01:50)
+- Format HH:MM: tampilan waktu tanpa detik untuk kemudahan baca
 - Keypad khusus dengan tombol angka, 00, dan operator
 
 ### 🎨 UI/UX Modern
-- **Splash Screen**: Layar pembuka dengan animasi dan branding yang menarik
 - **Material Design 3**: Desain modern dan konsisten
 - **Hamburger Menu**: Navigasi yang mudah dan konsisten di semua halaman
 - **Dialog Popup**: Hasil perhitungan dalam dialog yang informatif dan cantik
 - **Responsive Design**: Tampilan optimal di berbagai ukuran layar
-- **Smooth Animations**: Animasi yang halus dan engaging
 
 ## 🏗️ Struktur Proyek
 
@@ -59,6 +60,7 @@ lib/
 ├── main.dart                    # Entry point
 ├── pages/                       # Halaman utama
 │   ├── splash_screen.dart       # Layar pembuka dengan animasi
+│   ├── basic_calculator_page.dart # Kalkulator basic (halaman default)
 │   ├── fuel_calculator_page.dart
 │   ├── quota_calculator_page.dart
 │   ├── time_calculator_page.dart
@@ -82,8 +84,8 @@ lib/
 ## 🚀 Quick Start
 
 ### Yang saya gunakan
-- Flutter SDK 3.35.3
-- Dart SDK 3.9.2
+- Flutter SDK 3.24+
+- Dart SDK 3.9+
 
 ### Instalasi
 
@@ -108,6 +110,13 @@ lib/
 
 ## 🎯 Usage Example
 
+### Kalkulator Basic
+- **Operasi Dasar**: 123 + 456 = 579
+- **Toggle Tanda**: 5 → +/- → -5 → +/- → 5
+- **Persentase**: 50 → % → 0.5 (50% menjadi 0.5)
+- **Desimal**: 3.14 × 2 = 6.28
+- **Format**: 1,234,567 (otomatis dengan pemisah ribuan)
+
 ### Kalkulator BBM
 - **Input**: Jarak 100km, efisiensi 12km/L, harga Rp15.000/L
 - **Output**: Total biaya, biaya per km, breakdown detail
@@ -125,8 +134,9 @@ lib/
    - **Output**: Batas penggunaan ~0.40GB per hari, dan "Kuota Terpakai" = 38GB
 
 ### Kalkulator Waktu
-- Contoh: 00:45 + 00:30 = 01:15
-- Hasil 00:30 akan ditampilkan sebagai 00:30 (mm:ss), sedangkan 01:02:03 tetap HH:MM:SS
+- Contoh: 23:50 + 02:00 = Dual result: 25:50 dan 01:50
+- Format HH:MM untuk kemudahan baca (tanpa detik)
+- Hasil otomatis menampilkan kedua format jika melebihi 24 jam
 
 ## 🧪 Testing
 

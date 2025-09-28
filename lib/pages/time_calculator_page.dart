@@ -92,64 +92,86 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
           ..clear()
           ..addAll(_secondsToDigits(_parseDigitsToSeconds(_cachedResultDigits)));
         _rightDigits.clear();
-        _result = _formatSecondsForDisplay(_parseDigitsToSeconds(_leftDigits));
+        // Don't overwrite _result here - keep the dual result from evaluation
       }
     }
     _op = op;
   }
 
-  // Convert digit buffer to total seconds (normalize beyond 59 as needed)
+  // Convert digit buffer to total seconds with HH:MM format
   int _parseDigitsToSeconds(List<String> digits) {
     if (digits.isEmpty) return 0;
     final s = digits.join();
     final len = s.length;
-    int sec = 0, min = 0, hour = 0;
+    int min = 0, hour = 0;
+    
     if (len <= 2) {
-      sec = int.parse(s);
-    } else if (len <= 4) {
-      sec = int.parse(s.substring(len - 2));
-      min = int.parse(s.substring(0, len - 2));
-    } else {
-      sec = int.parse(s.substring(len - 2));
-      min = int.parse(s.substring(len - 4, len - 2));
-      hour = int.parse(s.substring(0, len - 4));
+      // 1-2 digits: treat as minutes
+      min = int.parse(s);
+    } else if (len == 3) {
+      // 3 digits: treat as H:MM (e.g., 230 = 2:30)
+      hour = int.parse(s.substring(0, 1));
+      min = int.parse(s.substring(1));
+    } else if (len >= 4) {
+      // 4+ digits: treat as HH:MM (e.g., 2350 = 23:50, 0200 = 02:00)  
+      hour = int.parse(s.substring(0, len - 2));
+      min = int.parse(s.substring(len - 2));
     }
-    return hour * 3600 + min * 60 + sec;
+    
+    return hour * 3600 + min * 60; // No seconds for HH:MM format
   }
 
-  // Untuk tampilan input: tampilkan mm:ss jika jam == 0, jika ada jam tampilkan HH:MM:SS
+  // Untuk tampilan input: format HH:MM
   String _formatSecondsForDisplay(int totalSeconds) {
     final h = totalSeconds ~/ 3600;
     final rem = totalSeconds % 3600;
     final m = rem ~/ 60;
-    final s = rem % 60;
     String two(int v) => v.toString().padLeft(2, '0');
     if (h == 0) {
-      // Show m:ss (no leading zero for minutes) when hour == 0
+      // Show M:MM (no leading zero for hours) when hour == 0
       final mText = m.toString();
-      return '$mText:${two(s)}';
+      return '$mText:00';
     }
-    return '${h.toString().padLeft(2, '0')}:${two(m)}:${two(s)}';
+    return '${h.toString().padLeft(2, '0')}:${two(m)}';
   }
 
-  // Catatan: Service evaluate mengembalikan HH:MM:SS (internal),
-  // namun UI menampilkan mm:ss ketika jam == 0.
+  // Format digits ke HH:MM untuk evaluasi
   String _formatDigitsFull(List<String> digits) {
     final secs = _parseDigitsToSeconds(digits);
     return TimeCalculationService.formatSeconds(secs);
   }
 
-  // Untuk tampilan hasil: tampilkan mm:ss ketika jam == 0, jika ada jam tampilkan HH:MM:SS
-  String _formatSecondsForResult(int totalSeconds) {
-    final h = totalSeconds ~/ 3600;
-    final rem = totalSeconds % 3600;
-    final m = rem ~/ 60;
-    final s = rem % 60;
-    String two(int v) => v.toString().padLeft(2, '0');
-    if (h == 0) {
-      return '${two(m)}:${two(s)}';
+  // Helper methods to parse dual result format from service
+  String _getMainResult(String result) {
+    // If result contains parentheses, extract the part before them
+    final parenIndex = result.indexOf(' (');
+    if (parenIndex != -1) {
+      return _formatResultForDisplay(result.substring(0, parenIndex));
     }
-    return '${h.toString().padLeft(2, '0')}:${two(m)}:${two(s)}';
+    return _formatResultForDisplay(result);
+  }
+
+  String? _getWrappedResult(String result) {
+    // If result contains parentheses, extract the wrapped time
+    final startParen = result.indexOf('(');
+    final endParen = result.lastIndexOf(')');
+    if (startParen != -1 && endParen != -1 && endParen > startParen) {
+      return _formatResultForDisplay(result.substring(startParen + 1, endParen));
+    }
+    return null;
+  }
+
+  // Format result for display: HH:MM format
+  String _formatResultForDisplay(String hhmm) {
+    final parts = hhmm.split(':');
+    if (parts.length != 2) return hhmm; // fallback
+    final h = int.parse(parts[0]);
+    final m = parts[1];
+    
+    if (h == 0) {
+      return '${int.parse(m)}:00';
+    }
+    return hhmm;
   }
 
   // Helper to attempt evaluation for chaining
@@ -175,32 +197,28 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
   final List<String> _cachedResultDigits = [];
 
   List<String> _secondsToDigits(int totalSeconds) {
-    // Konversi ke HH:MM:SS (internal), lalu ke digit rolling (H... + MM + SS)
+    // Konversi ke HH:MM format, lalu ke digit rolling
     final formatted = TimeCalculationService.formatSeconds(totalSeconds);
     final parts = formatted.split(':');
     final h = parts[0];
     final m = parts[1];
-    final s = parts[2];
     final digits = <String>[];
     if (h != '00') {
       digits.addAll(h.replaceFirst(RegExp(r'^0'), '').split(''));
     }
     digits.addAll(m.split(''));
-    digits.addAll(s.split(''));
     return digits;
   }
 
-  List<String> _resultToDigits(String hhmmss) {
-    final parts = hhmmss.split(':');
+  List<String> _resultToDigits(String hhmm) {
+    final parts = hhmm.split(':');
     final h = parts[0];
     final m = parts[1];
-    final s = parts[2];
     final digits = <String>[];
     if (h != '00') {
       digits.addAll(h.replaceFirst(RegExp(r'^0'), '').split(''));
     }
     digits.addAll(m.split(''));
-    digits.addAll(s.split(''));
     return digits;
   }
 
@@ -230,7 +248,7 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
       case '+':
       case '-':
         final right = _rightDigits.isEmpty
-            ? '00:00:00'
+            ? '00:00'
             : _formatDigitsFull(_rightDigits);
         return '$left $_op $right';
       case '*':
@@ -306,7 +324,7 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Hitung penjumlahan, pengurangan, perkalian, dan pembagian untuk format waktu.',
+                    'Kalkulator untuk menghitung penjumlahan, pengurangan, perkalian, dan pembagian dalam format waktu.',
                     style: TextStyle(color: Colors.white),
                   ),
                 ],
@@ -342,17 +360,33 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
                   const SizedBox(height: 8),
                   const Divider(height: 1),
                   const SizedBox(height: 8),
-                  Text(
-                    _formatSecondsForResult(
-                      TimeCalculationService.parseToSeconds(_result),
-                    ),
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white
-                          : Colors.black,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        _getMainResult(_result),
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black,
+                        ),
+                      ),
+                      if (_getWrappedResult(_result) != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          'atau ${_getWrappedResult(_result)}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.blue[300]
+                                : Colors.blue[700],
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                   if (_error != null) ...[
                     const SizedBox(height: 8),
@@ -402,18 +436,22 @@ class _ExpressionDisplay extends StatelessWidget {
     if (digits.isEmpty) return 0;
     final s = digits.join();
     final len = s.length;
-    int sec = 0, min = 0, hour = 0;
+    int min = 0, hour = 0;
+    
     if (len <= 2) {
-      sec = int.parse(s);
-    } else if (len <= 4) {
-      sec = int.parse(s.substring(len - 2));
-      min = int.parse(s.substring(0, len - 2));
-    } else {
-      sec = int.parse(s.substring(len - 2));
-      min = int.parse(s.substring(len - 4, len - 2));
-      hour = int.parse(s.substring(0, len - 4));
+      // 1-2 digits: treat as minutes
+      min = int.parse(s);
+    } else if (len == 3) {
+      // 3 digits: treat as H:MM (e.g., 230 = 2:30)
+      hour = int.parse(s.substring(0, 1));
+      min = int.parse(s.substring(1));
+    } else if (len >= 4) {
+      // 4+ digits: treat as HH:MM (e.g., 2350 = 23:50, 0200 = 02:00)  
+      hour = int.parse(s.substring(0, len - 2));
+      min = int.parse(s.substring(len - 2));
     }
-    return hour * 3600 + min * 60 + sec;
+    
+    return hour * 3600 + min * 60; // No seconds for HH:MM format
   }
 
   @override

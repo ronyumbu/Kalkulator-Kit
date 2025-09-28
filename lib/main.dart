@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'pages/splash_screen.dart';
+import 'pages/basic_calculator_page.dart';
 import 'pages/fuel_calculator_page.dart';
 import 'pages/quota_calculator_page.dart';
 import 'pages/about_page.dart';
@@ -19,15 +20,25 @@ void main() async {
   runApp(MyApp(settingsService: settingsService));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final SettingsService settingsService;
   
   const MyApp({super.key, required this.settingsService});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: settingsService,
+      value: widget.settingsService,
       child: Consumer<SettingsService>(
         builder: (context, settings, child) {
           return MaterialApp(
@@ -105,6 +116,7 @@ class MyApp extends StatelessWidget {
             themeMode: settings.getThemeMode(),
             home: const SplashScreen(),
             routes: {
+              '/calculator': (context) => const BasicCalculatorPage(),
               '/fuel': (context) => const FuelCalculatorPage(),
               '/quota': (context) => const QuotaCalculatorPage(),
               '/time': (context) => const TimeCalculatorPage(),

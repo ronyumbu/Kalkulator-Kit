@@ -39,7 +39,7 @@ class CalculationResult extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.green[800]?.withOpacity(0.3)
+                        ? Colors.green[800]?.withValues(alpha: 0.3)
                         : Colors.green[100],
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -139,7 +139,7 @@ class CalculationResult extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.green[800]?.withOpacity(0.2)
+                    ? Colors.green[800]?.withValues(alpha: 0.2)
                     : Colors.green[50],
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(

@@ -6,24 +6,22 @@ class TimeCalculationError implements Exception {
 }
 
 class TimeCalculationService {
-  // Parser internal: HH:MM:SS -> detik total. Menit/detik 0..59, jam >= 0.
+  // Parser untuk format HH:MM -> detik total. Menit 0..59, jam >= 0.
   static int parseToSeconds(String input) {
     final trimmed = input.trim();
-    // Allow hours to be any length (1+), minutes/seconds exactly two digits
     final parts = trimmed.split(':');
-    if (parts.length != 3) {
-  throw TimeCalculationError('Format waktu harus HH:MM:SS');
+    if (parts.length != 2) {
+      throw TimeCalculationError('Format waktu harus HH:MM');
     }
     final h = int.tryParse(parts[0]);
     final m = int.tryParse(parts[1]);
-    final s = int.tryParse(parts[2]);
-    if (h == null || m == null || s == null) {
+    if (h == null || m == null) {
       throw TimeCalculationError('Format waktu tidak valid');
     }
-    if (m < 0 || m > 59 || s < 0 || s > 59 || h < 0) {
-      throw TimeCalculationError('Nilai menit/detik harus 00..59 dan jam >= 0');
+    if (m < 0 || m > 59 || h < 0) {
+      throw TimeCalculationError('Nilai menit harus 00..59 dan jam >= 0');
     }
-    return h * 3600 + m * 60 + s;
+    return h * 3600 + m * 60; // No seconds
   }
 
   static String formatSeconds(int totalSeconds) {
@@ -33,9 +31,13 @@ class TimeCalculationService {
     final h = totalSeconds ~/ 3600;
     final rem = totalSeconds % 3600;
     final m = rem ~/ 60;
-    final s = rem % 60;
+    // Round to nearest minute if there are remaining seconds
+    final finalM = rem % 60 >= 30 ? m + 1 : m;
+    final finalH = finalM >= 60 ? h + 1 : h;
+    final displayM = finalM >= 60 ? 0 : finalM;
+    
     String two(int v) => v.toString().padLeft(2, '0');
-    return '${h.toString().padLeft(2, '0')}:${two(m)}:${two(s)}';
+    return '${finalH.toString().padLeft(2, '0')}:${two(displayM)}';
   }
 
   static int add(String t1, String t2) {
@@ -104,7 +106,7 @@ class TimeCalculationService {
         final secs = parseToSeconds(normalized);
         return formatSeconds(secs);
       }
-      throw TimeCalculationError('Masukkan ekspresi lengkap, mis. 01:00:00 + 00:30:00');
+      throw TimeCalculationError('Masukkan ekspresi lengkap, mis. 01:00 + 00:30');
     }
     if (opMatch.length > 1) {
       throw TimeCalculationError('Hanya satu operasi yang didukung per hitung');
@@ -117,39 +119,63 @@ class TimeCalculationService {
     final left = parts[0].trim();
     final right = parts[1].trim();
 
+    int resultSeconds;
     switch (op) {
       case '+':
         if (!_isTime(left) || !_isTime(right)) {
           throw TimeCalculationError('Penjumlahan harus waktu + waktu');
         }
-        return formatSeconds(add(left, right));
+        resultSeconds = add(left, right);
+        break;
       case '-':
         if (!_isTime(left) || !_isTime(right)) {
           throw TimeCalculationError('Pengurangan harus waktu - waktu');
         }
-        return formatSeconds(subtract(left, right));
+        resultSeconds = subtract(left, right);
+        break;
       case '*':
         // Support time * number or number * time
         if (_isTime(left) && _isNumber(right)) {
-          return formatSeconds(multiply(left, num.parse(right)));
+          resultSeconds = multiply(left, num.parse(right));
+        } else if (_isNumber(left) && _isTime(right)) {
+          resultSeconds = multiply(right, num.parse(left));
+        } else {
+          throw TimeCalculationError('Perkalian harus waktu × angka');
         }
-        if (_isNumber(left) && _isTime(right)) {
-          return formatSeconds(multiply(right, num.parse(left)));
-        }
-        throw TimeCalculationError('Perkalian harus waktu × angka');
+        break;
       case '/':
         if (_isTime(left) && _isNumber(right)) {
-          return formatSeconds(divide(left, num.parse(right)));
+          resultSeconds = divide(left, num.parse(right));
+        } else {
+          // number / time does not make sense in time unit
+          throw TimeCalculationError('Pembagian harus waktu ÷ angka');
         }
-        // number / time does not make sense in time unit
-        throw TimeCalculationError('Pembagian harus waktu ÷ angka');
+        break;
       default:
         throw TimeCalculationError('Operator tidak dikenal');
+    }
+
+    return formatSecondsWithDayWrap(resultSeconds);
+  }
+
+  // New method to handle 24-hour wraparound display
+  static String formatSecondsWithDayWrap(int totalSeconds) {
+    final hoursInSeconds = 24 * 3600; // 86400 seconds in 24 hours
+    
+    if (totalSeconds >= hoursInSeconds) {
+      // Show both raw result and day-wrapped result
+      final rawResult = formatSeconds(totalSeconds);
+      final wrappedSeconds = totalSeconds % hoursInSeconds;
+      final wrappedResult = formatSeconds(wrappedSeconds);
+      return '$rawResult ($wrappedResult)';
+    } else {
+      // Normal case: just show the result
+      return formatSeconds(totalSeconds);
     }
   }
 
   static bool _isTime(String v) {
-    final r = RegExp(r"^\d{1,}:\d{2}:\d{2}");
+    final r = RegExp(r"^\d{1,}:\d{2}$");
     if (!r.hasMatch(v)) return false;
     try {
       parseToSeconds(v);

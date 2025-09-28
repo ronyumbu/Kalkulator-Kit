@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import '../services/calculation_service.dart';
-import '../services/settings_service.dart';
 import '../widgets/fuel_calculator_form.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/fuel_result_dialog.dart';
@@ -43,17 +40,9 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
     return double.tryParse(value.replaceAll('.', '')) ?? 0.0;
   }
 
-  // Helper function to trigger vibration if enabled
-  void _triggerVibration() {
-    final settings = context.read<SettingsService>();
-    if (settings.vibrationFeedback) {
-      HapticFeedback.lightImpact();
-    }
-  }
+
 
   void _calculateCosts() {
-    // Trigger vibration feedback
-    _triggerVibration();
     
     setState(() {
       // Validate inputs
@@ -96,6 +85,8 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
           // Hide keyboard after calculation
           FocusScope.of(context).unfocus();
 
+
+
           // Show result in beautiful dialog
           FuelResultDialog.show(
             context,
@@ -109,6 +100,7 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
             fuelPrice: price,
           );
         } catch (e) {
+          
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Error dalam kalkulasi: ${e.toString()}'),
@@ -117,6 +109,7 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
           );
         }
       } else {
+        
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Mohon periksa input yang sudah diisi'),
@@ -128,8 +121,6 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
   }
 
   void _resetForm() {
-    // Trigger vibration feedback
-    _triggerVibration();
     
     setState(() {
       _distanceController.clear();
@@ -224,7 +215,7 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
                   ),
                   const SizedBox(height: 12),
                   const Text(
-                    'Ini untuk itung duit yang dipakek buat beli bensin yawww ',
+                    'Kalkulator untuk menghitung biaya bahan bakar minyak',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,

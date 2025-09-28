@@ -49,7 +49,19 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.local_gas_station, color: Colors.blue),
+            leading: const Icon(Icons.calculate, color: Colors.blue),
+            title: const Text(
+              'Kalkulator',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Kalkulator dasar angka'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/calculator');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.local_gas_station, color: Colors.orange),
             title: const Text(
               'Kalkulator BBM',
               style: TextStyle(fontWeight: FontWeight.w500),
