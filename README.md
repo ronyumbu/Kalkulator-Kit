@@ -8,6 +8,14 @@ Proyek aplikasi android sederhana pakai Flutter.
 
 ## ✨ Fitur Utama
 
+### 🎨 Splash Screen
+- Animasi fade in yang halus saat aplikasi dimulai
+- Background gradien biru yang menarik (Colors.blue[600] → Colors.blue[400])
+- Logo aplikasi dengan border putih tipis yang proporsional
+- Nama aplikasi "Kalkulator Kit" dengan typography yang elegan
+- Loading indicator dengan auto-navigation setelah 3 detik
+- Native splash screen configuration untuk pengalaman startup yang optimal
+
 ### ⛽ Kalkulator BBM
 - Hitung biaya bahan bakar berdasarkan jarak, efisiensi, dan harga
 - Input biaya tambahan (tol, parkir)
@@ -37,11 +45,12 @@ Proyek aplikasi android sederhana pakai Flutter.
 - Keypad khusus dengan tombol angka, 00, dan operator
 
 ### 🎨 UI/UX Modern
-- Material Design 3
-- Hamburger menu konsisten
-- Dialog popup
-- Dialog popup yang ok
-- Responsive design
+- **Splash Screen**: Layar pembuka dengan animasi dan branding yang menarik
+- **Material Design 3**: Desain modern dan konsisten
+- **Hamburger Menu**: Navigasi yang mudah dan konsisten di semua halaman
+- **Dialog Popup**: Hasil perhitungan dalam dialog yang informatif dan cantik
+- **Responsive Design**: Tampilan optimal di berbagai ukuran layar
+- **Smooth Animations**: Animasi yang halus dan engaging
 
 ## 🏗️ Struktur Proyek
 
@@ -49,6 +58,7 @@ Proyek aplikasi android sederhana pakai Flutter.
 lib/
 ├── main.dart                    # Entry point
 ├── pages/                       # Halaman utama
+│   ├── splash_screen.dart       # Layar pembuka dengan animasi
 │   ├── fuel_calculator_page.dart
 │   ├── quota_calculator_page.dart
 │   ├── time_calculator_page.dart

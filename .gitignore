@@ -46,7 +46,9 @@ app.*.map.json
 /android/app/release
 
 # Project docs should be tracked
-# (Hapus baris ignore sebelumnya untuk INFORMASI.md)
+
+# Ignore internal info file
+INFORMASI.md
 
 # APK files
 *.apk

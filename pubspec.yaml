@@ -106,9 +106,9 @@ flutter_launcher_icons:
     image_path: "images/logo.png"
     icon_size: 48 # min:48, max:256, default: 48
 
-# Native splash screen configuration (plain black screen, no image)
+# Native splash screen configuration with blue background
 flutter_native_splash:
-  color: "#000000"
+  color: "#1976D2"  # Colors.blue[600] equivalent
   android: true
   ios: true
   web: true
@@ -116,6 +116,6 @@ flutter_native_splash:
   android_gravity: center
   ios_content_mode: center
   android_12:
-    color: "#000000"
+    color: "#1976D2"
 
 # Native splash screen configuration

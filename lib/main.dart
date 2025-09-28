@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/splash_screen.dart';
 import 'pages/fuel_calculator_page.dart';
 import 'pages/quota_calculator_page.dart';
 import 'pages/about_page.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
         scaffoldBackgroundColor: Colors.grey[50],
       ),
-      initialRoute: '/fuel',
+      home: const SplashScreen(),
       routes: {
         '/fuel': (context) => const FuelCalculatorPage(),
         '/quota': (context) => const QuotaCalculatorPage(),
