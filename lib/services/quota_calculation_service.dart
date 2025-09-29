@@ -16,7 +16,11 @@ class QuotaCalculationService {
     } else {
       if (expiryDate.isBefore(useCurrentDate) ||
           expiryDate.isAtSameMomentAs(
-            DateTime(useCurrentDate.year, useCurrentDate.month, useCurrentDate.day),
+            DateTime(
+              useCurrentDate.year,
+              useCurrentDate.month,
+              useCurrentDate.day,
+            ),
           )) {
         errors['expiryDate'] = 'Tanggal masa tenggang harus setelah hari ini';
       } else if (expiryDate.isAfter(
@@ -48,7 +52,8 @@ class QuotaCalculationService {
       } else if (total <= 0) {
         errors['totalPurchased'] = 'Total beli kuota harus lebih dari 0';
       } else if (remaining != null && total < remaining) {
-        errors['totalPurchased'] = 'Total beli kuota tidak boleh kurang dari sisa kuota';
+        errors['totalPurchased'] =
+            'Total beli kuota tidak boleh kurang dari sisa kuota';
       }
     }
 

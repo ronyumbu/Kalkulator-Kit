@@ -14,7 +14,8 @@ class QuotaCalculatorPage extends StatefulWidget {
 class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _quotaController = TextEditingController();
-  final TextEditingController _totalPurchasedController = TextEditingController();
+  final TextEditingController _totalPurchasedController =
+      TextEditingController();
   DateTime? _selectedDate;
   DateTime _currentDate = DateTime.now();
   Map<String, String> _errors = {};
@@ -33,10 +34,7 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text(
-            'Pilih Tanggal Mulai',
-            textAlign: TextAlign.center,
-          ),
+          title: const Text('Pilih Tanggal Mulai', textAlign: TextAlign.center),
           content: SizedBox(
             width: double.maxFinite,
             height: 400,
@@ -57,7 +55,10 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
       setState(() {
         _currentDate = picked;
         // Reset tanggal masa tenggang jika tanggal mulai berubah
-        if (_selectedDate != null && _selectedDate!.isBefore(_currentDate.add(const Duration(days: 1)))) {
+        if (_selectedDate != null &&
+            _selectedDate!.isBefore(
+              _currentDate.add(const Duration(days: 1)),
+            )) {
           _selectedDate = null;
         }
       });
@@ -271,7 +272,6 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
             ),
 
             const SizedBox(height: 32),
-
           ],
         ),
       ),

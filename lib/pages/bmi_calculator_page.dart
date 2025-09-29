@@ -27,7 +27,6 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
   }
 
   void _onCalculate() {
-
     setState(() {
       _errors = BMICalculationService.validateInputs(
         gender: _gender,
@@ -41,13 +40,16 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
     if (_errors.isEmpty) {
       final height = double.parse(_heightController.text.replaceAll(',', '.'));
       final weight = double.parse(_weightController.text.replaceAll(',', '.'));
-      final bmi = BMICalculationService.calculateBMI(heightCm: height, weightKg: weight);
+      final bmi = BMICalculationService.calculateBMI(
+        heightCm: height,
+        weightKg: weight,
+      );
       final category = BMICalculationService.getBMICategory(bmi);
       final color = BMICalculationService.getBMICategoryColor(bmi);
 
       if (!mounted) return;
       FocusScope.of(context).unfocus();
-      
+
       BMIResultDialog.show(
         context,
         bmi: bmi,
@@ -56,7 +58,6 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
         gender: _gender == 'L' ? 'Pria' : 'Wanita',
       );
     } else {
-      
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -75,7 +76,6 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
       _errors.clear();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +174,9 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
             // Form
             Card(
               elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -183,7 +185,10 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                     // Gender selection
                     const Text(
                       'Jenis Kelamin',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -216,7 +221,13 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                     if (_errors['gender'] != null)
                       Padding(
                         padding: const EdgeInsets.only(left: 12, bottom: 8),
-                        child: Text(_errors['gender']!, style: const TextStyle(color: Colors.red, fontSize: 12)),
+                        child: Text(
+                          _errors['gender']!,
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                     const SizedBox(height: 12),
 
@@ -235,7 +246,10 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                       hintText: 'Masukkan berat badan (kg)',
                       controller: _weightController,
                       errorText: _errors['weight'],
-                      prefixIcon: const Icon(Icons.monitor_weight, color: Colors.teal),
+                      prefixIcon: const Icon(
+                        Icons.monitor_weight,
+                        color: Colors.teal,
+                      ),
                       suffixText: 'kg',
                       allowDecimals: true,
                     ),
@@ -251,7 +265,9 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           backgroundColor: Colors.teal[600],
                           foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
                     ),
@@ -296,18 +312,18 @@ class _GenderTile extends StatelessWidget {
         duration: const Duration(milliseconds: 180),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
-          color: selected 
-              ? selectedColor.withValues(alpha: 0.12) 
+          color: selected
+              ? selectedColor.withValues(alpha: 0.12)
               : (Theme.of(context).brightness == Brightness.dark
-                  ? const Color(0xFF2C2C2C)
-                  : Colors.grey[50]),
+                    ? const Color(0xFF2C2C2C)
+                    : Colors.grey[50]),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: selected 
-                ? selectedColor 
+            color: selected
+                ? selectedColor
                 : (Theme.of(context).brightness == Brightness.dark
-                    ? const Color(0xFF404040)
-                    : baseBorder.color),
+                      ? const Color(0xFF404040)
+                      : baseBorder.color),
             width: selected ? 2 : 1,
           ),
         ),
@@ -318,7 +334,11 @@ class _GenderTile extends StatelessWidget {
             AnimatedScale(
               duration: const Duration(milliseconds: 160),
               scale: selected ? 1.08 : 1.0,
-              child: _Avatar(assetPath: assetPath, fallbackIcon: icon, tint: selected ? selectedColor : Colors.grey[700]!),
+              child: _Avatar(
+                assetPath: assetPath,
+                fallbackIcon: icon,
+                tint: selected ? selectedColor : Colors.grey[700]!,
+              ),
             ),
             const SizedBox(height: 10),
             Text(
@@ -328,11 +348,11 @@ class _GenderTile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: selected 
-                    ? selectedColor 
+                color: selected
+                    ? selectedColor
                     : (Theme.of(context).brightness == Brightness.dark
-                        ? Colors.grey[300]
-                        : Colors.grey[800]),
+                          ? Colors.grey[300]
+                          : Colors.grey[800]),
               ),
             ),
           ],
@@ -346,7 +366,11 @@ class _Avatar extends StatelessWidget {
   final String? assetPath;
   final IconData fallbackIcon;
   final Color tint;
-  const _Avatar({required this.assetPath, required this.fallbackIcon, required this.tint});
+  const _Avatar({
+    required this.assetPath,
+    required this.fallbackIcon,
+    required this.tint,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -359,7 +383,8 @@ class _Avatar extends StatelessWidget {
           width: size,
           height: size,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Icon(fallbackIcon, size: 32, color: tint),
+          errorBuilder: (_, __, ___) =>
+              Icon(fallbackIcon, size: 32, color: tint),
         ),
       );
     } else {

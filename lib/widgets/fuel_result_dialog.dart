@@ -53,7 +53,7 @@ class FuelResultDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fuelNeeded = distance / efficiency;
-    
+
     return Dialog(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? const Color(0xFF1C1C1C)
@@ -157,7 +157,7 @@ class FuelResultDialog extends StatelessWidget {
                       Icons.attach_money,
                       Colors.red,
                     ),
-                    
+
                     if (tollCost > 0) ...[
                       const SizedBox(height: 12),
                       _buildDetailRow(
@@ -167,7 +167,7 @@ class FuelResultDialog extends StatelessWidget {
                         Colors.purple,
                       ),
                     ],
-                    
+
                     if (parkingCost > 0) ...[
                       const SizedBox(height: 12),
                       _buildDetailRow(
@@ -197,7 +197,9 @@ class FuelResultDialog extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).brightness == Brightness.dark
+                                  color:
+                                      Theme.of(context).brightness ==
+                                          Brightness.dark
                                       ? Colors.blue[400]
                                       : Colors.blue[600],
                                   borderRadius: BorderRadius.circular(8),
@@ -218,7 +220,9 @@ class FuelResultDialog extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
-                                        color: Theme.of(context).brightness == Brightness.dark
+                                        color:
+                                            Theme.of(context).brightness ==
+                                                Brightness.dark
                                             ? Colors.grey[400]
                                             : Colors.black54,
                                         letterSpacing: 0.5,
@@ -226,11 +230,15 @@ class FuelResultDialog extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      CurrencyFormatter.formatCurrencyNoDecimal(totalCost),
+                                      CurrencyFormatter.formatCurrencyNoDecimal(
+                                        totalCost,
+                                      ),
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).brightness == Brightness.dark
+                                        color:
+                                            Theme.of(context).brightness ==
+                                                Brightness.dark
                                             ? Colors.blue[300]
                                             : Colors.blue[700],
                                       ),
@@ -245,12 +253,16 @@ class FuelResultDialog extends StatelessWidget {
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).brightness == Brightness.dark
+                              color:
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark
                                   ? const Color(0xFF2C2C2C)
                                   : Colors.white,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Theme.of(context).brightness == Brightness.dark
+                                color:
+                                    Theme.of(context).brightness ==
+                                        Brightness.dark
                                     ? const Color(0xFF404040)
                                     : Colors.grey[300]!,
                               ),
@@ -262,7 +274,9 @@ class FuelResultDialog extends StatelessWidget {
                                   'Biaya per km:',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Theme.of(context).brightness == Brightness.dark
+                                    color:
+                                        Theme.of(context).brightness ==
+                                            Brightness.dark
                                         ? Colors.grey[300]
                                         : Colors.black87,
                                   ),
@@ -272,7 +286,9 @@ class FuelResultDialog extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
-                                    color: Theme.of(context).brightness == Brightness.dark
+                                    color:
+                                        Theme.of(context).brightness ==
+                                            Brightness.dark
                                         ? Colors.white
                                         : Colors.black87,
                                   ),

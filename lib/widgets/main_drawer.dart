@@ -108,6 +108,18 @@ class MainDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/time');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.date_range, color: Colors.indigo),
+            title: const Text(
+              'Kalkulator Tanggal',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Perhitungan tanggal dan hari'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/date');
+            },
+          ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.settings, color: Colors.grey),

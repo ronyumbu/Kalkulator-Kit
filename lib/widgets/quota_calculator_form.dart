@@ -64,9 +64,9 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
             _buildQuotaField(),
             const SizedBox(height: 16),
 
-              // Optional Total Purchased Quota Input
-              _buildTotalPurchasedField(),
-              const SizedBox(height: 16),
+            // Optional Total Purchased Quota Input
+            _buildTotalPurchasedField(),
+            const SizedBox(height: 16),
 
             // Expiry Date (Date Picker)
             _buildExpiryDateField(),
@@ -119,12 +119,12 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
-                  ? (widget.onCurrentDateSelect != null 
-                      ? const Color(0xFF404040) 
-                      : const Color(0xFF2C2C2C))
-                  : (widget.onCurrentDateSelect != null 
-                      ? Colors.grey[50] 
-                      : Colors.grey[100]),
+                  ? (widget.onCurrentDateSelect != null
+                        ? const Color(0xFF404040)
+                        : const Color(0xFF2C2C2C))
+                  : (widget.onCurrentDateSelect != null
+                        ? Colors.grey[50]
+                        : Colors.grey[100]),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: Theme.of(context).brightness == Brightness.dark
@@ -145,7 +145,11 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
                   ),
                 ),
                 if (widget.onCurrentDateSelect != null)
-                  const Icon(Icons.calendar_today, color: Colors.grey, size: 18),
+                  const Icon(
+                    Icons.calendar_today,
+                    color: Colors.grey,
+                    size: 18,
+                  ),
               ],
             ),
           ),
@@ -189,8 +193,8 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
                 color: widget.errors.containsKey('expiryDate')
                     ? Colors.red
                     : (Theme.of(context).brightness == Brightness.dark
-                        ? const Color(0xFF555555)
-                        : Colors.grey[300]!),
+                          ? const Color(0xFF555555)
+                          : Colors.grey[300]!),
               ),
             ),
             child: Row(
@@ -204,15 +208,15 @@ class _QuotaCalculatorFormState extends State<QuotaCalculatorForm> {
                     fontSize: 16,
                     color: widget.selectedDate != null
                         ? (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black87)
+                              ? Colors.white
+                              : Colors.black87)
                         : (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.grey[400]
-                            : Colors.grey[600]),
+                              ? Colors.grey[400]
+                              : Colors.grey[600]),
                   ),
                 ),
                 Icon(
-                  Icons.calendar_today, 
+                  Icons.calendar_today,
                   color: Theme.of(context).brightness == Brightness.dark
                       ? Colors.grey[400]
                       : Colors.grey,

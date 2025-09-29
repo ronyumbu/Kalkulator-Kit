@@ -13,7 +13,7 @@ class FuelCalculatorPage extends StatefulWidget {
 
 class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
   // Controllers for text fields
   final TextEditingController _distanceController = TextEditingController();
   final TextEditingController _efficiencyController = TextEditingController();
@@ -40,10 +40,7 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
     return double.tryParse(value.replaceAll('.', '')) ?? 0.0;
   }
 
-
-
   void _calculateCosts() {
-    
     setState(() {
       // Validate inputs
       _errors = CalculationService.validateInputs(
@@ -85,8 +82,6 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
           // Hide keyboard after calculation
           FocusScope.of(context).unfocus();
 
-
-
           // Show result in beautiful dialog
           FuelResultDialog.show(
             context,
@@ -100,7 +95,6 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
             fuelPrice: price,
           );
         } catch (e) {
-          
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Error dalam kalkulasi: ${e.toString()}'),
@@ -109,7 +103,6 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
           );
         }
       } else {
-        
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Mohon periksa input yang sudah diisi'),
@@ -121,7 +114,6 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
   }
 
   void _resetForm() {
-    
     setState(() {
       _distanceController.clear();
       _efficiencyController.clear();
@@ -240,7 +232,6 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
             ),
 
             const SizedBox(height: 32),
-            
           ],
         ),
       ),

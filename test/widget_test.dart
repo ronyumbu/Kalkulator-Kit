@@ -16,12 +16,15 @@ void main() {
     testWidgets('App loads correctly', (WidgetTester tester) async {
       // Create a settings service for testing
       final settingsService = SettingsService();
-      
+
       // Build our app and trigger a frame.
       await tester.pumpWidget(MyApp(settingsService: settingsService));
 
       // Initially should show splash screen
       expect(find.text('Kalkulator Kit'), findsOneWidget);
+      
+      // Wait for splash screen timer to complete (3 seconds)
+      await tester.pumpAndSettle(const Duration(seconds: 4));
     });
 
     group('CalculationService Tests', () {

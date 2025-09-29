@@ -35,7 +35,7 @@ class TimeCalculationService {
     final finalM = rem % 60 >= 30 ? m + 1 : m;
     final finalH = finalM >= 60 ? h + 1 : h;
     final displayM = finalM >= 60 ? 0 : finalM;
-    
+
     String two(int v) => v.toString().padLeft(2, '0');
     return '${finalH.toString().padLeft(2, '0')}:${two(displayM)}';
   }
@@ -106,7 +106,9 @@ class TimeCalculationService {
         final secs = parseToSeconds(normalized);
         return formatSeconds(secs);
       }
-      throw TimeCalculationError('Masukkan ekspresi lengkap, mis. 01:00 + 00:30');
+      throw TimeCalculationError(
+        'Masukkan ekspresi lengkap, mis. 01:00 + 00:30',
+      );
     }
     if (opMatch.length > 1) {
       throw TimeCalculationError('Hanya satu operasi yang didukung per hitung');
@@ -161,7 +163,7 @@ class TimeCalculationService {
   // New method to handle 24-hour wraparound display
   static String formatSecondsWithDayWrap(int totalSeconds) {
     final hoursInSeconds = 24 * 3600; // 86400 seconds in 24 hours
-    
+
     if (totalSeconds >= hoursInSeconds) {
       // Show both raw result and day-wrapped result
       final rawResult = formatSeconds(totalSeconds);
@@ -185,5 +187,6 @@ class TimeCalculationService {
     }
   }
 
-  static bool _isNumber(String v) => RegExp(r"^\d+(\.\d+)?$").hasMatch(v.trim());
+  static bool _isNumber(String v) =>
+      RegExp(r"^\d+(\.\d+)?$").hasMatch(v.trim());
 }

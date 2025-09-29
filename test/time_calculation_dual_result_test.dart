@@ -30,10 +30,14 @@ void main() {
 
     test('formatSecondsWithDayWrap method directly', () {
       // Test the new method directly
-      final result1 = TimeCalculationService.formatSecondsWithDayWrap(45000); // 12:30
+      final result1 = TimeCalculationService.formatSecondsWithDayWrap(
+        45000,
+      ); // 12:30
       expect(result1, '12:30');
-      
-      final result2 = TimeCalculationService.formatSecondsWithDayWrap(93000); // 25:50
+
+      final result2 = TimeCalculationService.formatSecondsWithDayWrap(
+        93000,
+      ); // 25:50
       expect(result2, '25:50 (01:50)');
     });
   });

@@ -23,21 +23,17 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pengaturan'),
-      ),
+      appBar: AppBar(title: const Text('Pengaturan')),
       body: Consumer<SettingsService>(
         builder: (context, settings, child) {
           return ListView(
             children: [
               // Tema Aplikasi Section
               const SectionTitle(title: 'Tema Aplikasi'),
-              
+
               // Theme Mode Selection
               ListTile(
                 leading: Icon(
@@ -50,18 +46,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   value: settings.themeMode,
                   underline: const SizedBox(),
                   items: const [
-                    DropdownMenuItem(
-                      value: 'light',
-                      child: Text('Terang'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'dark',
-                      child: Text('Gelap'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'auto',
-                      child: Text('Otomatis'),
-                    ),
+                    DropdownMenuItem(value: 'light', child: Text('Terang')),
+                    DropdownMenuItem(value: 'dark', child: Text('Gelap')),
+                    DropdownMenuItem(value: 'auto', child: Text('Otomatis')),
                   ],
                   onChanged: (String? value) {
                     if (value != null) {
@@ -71,8 +58,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
               ),
-
-
 
               // Reset to Defaults (Optional)
               const SizedBox(height: 24),

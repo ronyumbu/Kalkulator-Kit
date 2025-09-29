@@ -44,13 +44,13 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
       if (RegExp(r'^\d$').hasMatch(key) || key == '00') {
         if (_op == null) {
           if (key == '00') {
-            _leftDigits.addAll(['0','0']);
+            _leftDigits.addAll(['0', '0']);
           } else {
             _leftDigits.add(key);
           }
         } else {
           if (key == '00') {
-            _rightDigits.addAll(['0','0']);
+            _rightDigits.addAll(['0', '0']);
           } else {
             _rightDigits.add(key);
           }
@@ -90,7 +90,9 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
         // Move result to left and continue with new operator
         _leftDigits
           ..clear()
-          ..addAll(_secondsToDigits(_parseDigitsToSeconds(_cachedResultDigits)));
+          ..addAll(
+            _secondsToDigits(_parseDigitsToSeconds(_cachedResultDigits)),
+          );
         _rightDigits.clear();
         // Don't overwrite _result here - keep the dual result from evaluation
       }
@@ -104,7 +106,7 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
     final s = digits.join();
     final len = s.length;
     int min = 0, hour = 0;
-    
+
     if (len <= 2) {
       // 1-2 digits: treat as minutes
       min = int.parse(s);
@@ -113,11 +115,11 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
       hour = int.parse(s.substring(0, 1));
       min = int.parse(s.substring(1));
     } else if (len >= 4) {
-      // 4+ digits: treat as HH:MM (e.g., 2350 = 23:50, 0200 = 02:00)  
+      // 4+ digits: treat as HH:MM (e.g., 2350 = 23:50, 0200 = 02:00)
       hour = int.parse(s.substring(0, len - 2));
       min = int.parse(s.substring(len - 2));
     }
-    
+
     return hour * 3600 + min * 60; // No seconds for HH:MM format
   }
 
@@ -156,7 +158,9 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
     final startParen = result.indexOf('(');
     final endParen = result.lastIndexOf(')');
     if (startParen != -1 && endParen != -1 && endParen > startParen) {
-      return _formatResultForDisplay(result.substring(startParen + 1, endParen));
+      return _formatResultForDisplay(
+        result.substring(startParen + 1, endParen),
+      );
     }
     return null;
   }
@@ -167,7 +171,7 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
     if (parts.length != 2) return hhmm; // fallback
     final h = int.parse(parts[0]);
     final m = parts[1];
-    
+
     if (h == 0) {
       return '${int.parse(m)}:00';
     }
@@ -380,7 +384,8 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: Theme.of(context).brightness == Brightness.dark
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
                                 ? Colors.blue[300]
                                 : Colors.blue[700],
                           ),
@@ -437,7 +442,7 @@ class _ExpressionDisplay extends StatelessWidget {
     final s = digits.join();
     final len = s.length;
     int min = 0, hour = 0;
-    
+
     if (len <= 2) {
       // 1-2 digits: treat as minutes
       min = int.parse(s);
@@ -446,11 +451,11 @@ class _ExpressionDisplay extends StatelessWidget {
       hour = int.parse(s.substring(0, 1));
       min = int.parse(s.substring(1));
     } else if (len >= 4) {
-      // 4+ digits: treat as HH:MM (e.g., 2350 = 23:50, 0200 = 02:00)  
+      // 4+ digits: treat as HH:MM (e.g., 2350 = 23:50, 0200 = 02:00)
       hour = int.parse(s.substring(0, len - 2));
       min = int.parse(s.substring(len - 2));
     }
-    
+
     return hour * 3600 + min * 60; // No seconds for HH:MM format
   }
 
@@ -466,7 +471,9 @@ class _ExpressionDisplay extends StatelessWidget {
         if (rightText.isNotEmpty) text += ' $rightText';
       } else {
         final rightSecs = _parseDigitsToSeconds(rightDigits);
-        final rightText = rightDigits.isEmpty ? '00:00' : formatSecondsForDisplay(rightSecs);
+        final rightText = rightDigits.isEmpty
+            ? '00:00'
+            : formatSecondsForDisplay(rightSecs);
         text += ' $rightText';
       }
     }

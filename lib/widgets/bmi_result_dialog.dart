@@ -85,7 +85,11 @@ class BMIResultDialog extends StatelessWidget {
                       color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.monitor_weight, color: Colors.white, size: 32),
+                    child: const Icon(
+                      Icons.monitor_weight,
+                      color: Colors.white,
+                      size: 32,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   const Text(
@@ -112,7 +116,8 @@ class BMIResultDialog extends StatelessWidget {
                           'BMI:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).brightness == Brightness.dark
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
                                 ? Colors.grey[300]
                                 : Colors.black87,
                           ),
@@ -135,18 +140,24 @@ class BMIResultDialog extends StatelessWidget {
                           'Kategori:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).brightness == Brightness.dark
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
                                 ? Colors.grey[300]
                                 : Colors.black87,
                           ),
                         ),
                         const SizedBox(width: 8),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 6,
+                          ),
                           decoration: BoxDecoration(
                             color: categoryColor.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: categoryColor.withValues(alpha: 0.6)),
+                            border: Border.all(
+                              color: categoryColor.withValues(alpha: 0.6),
+                            ),
                           ),
                           child: Text(
                             localizedCategory,
@@ -162,7 +173,13 @@ class BMIResultDialog extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     // Simple legend (Indonesian)
-                    const Text('Klasifikasi Umum', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                    const Text(
+                      'Klasifikasi Umum',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     const SizedBox(height: 8),
                     _legendRow('Kekurangan Berat Badan', Colors.amber[700]!),
                     const SizedBox(height: 6),
@@ -192,9 +209,14 @@ class BMIResultDialog extends StatelessWidget {
                     backgroundColor: categoryColor,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                  child: const Text('Tutup', style: TextStyle(fontWeight: FontWeight.w600)),
+                  child: const Text(
+                    'Tutup',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
             ),
@@ -207,7 +229,14 @@ class BMIResultDialog extends StatelessWidget {
   Widget _legendRow(String label, Color color) {
     return Row(
       children: [
-        Container(width: 12, height: 12, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(3))),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
         const SizedBox(width: 8),
         Text(label, style: const TextStyle(fontSize: 14)),
       ],

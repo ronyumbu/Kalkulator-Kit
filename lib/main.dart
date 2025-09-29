@@ -7,22 +7,23 @@ import 'pages/quota_calculator_page.dart';
 import 'pages/about_page.dart';
 import 'pages/time_calculator_page.dart';
 import 'pages/bmi_calculator_page.dart';
+import 'pages/date_calculator_page.dart';
 import 'pages/settings_page.dart';
 import 'services/settings_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize settings service
   final settingsService = SettingsService();
   await settingsService.loadSettings();
-  
+
   runApp(MyApp(settingsService: settingsService));
 }
 
 class MyApp extends StatefulWidget {
   final SettingsService settingsService;
-  
+
   const MyApp({super.key, required this.settingsService});
 
   @override
@@ -121,6 +122,7 @@ class _MyAppState extends State<MyApp> {
               '/quota': (context) => const QuotaCalculatorPage(),
               '/time': (context) => const TimeCalculatorPage(),
               '/bmi': (context) => const BMICalculatorPage(),
+              '/date': (context) => const DateCalculatorPage(),
               '/settings': (context) => const SettingsPage(),
               '/about': (context) => const AboutPage(),
             },

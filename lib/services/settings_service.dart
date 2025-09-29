@@ -27,9 +27,9 @@ class SettingsService extends ChangeNotifier {
   Future<void> loadSettings() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      
+
       _themeMode = prefs.getString(_themeModeKey) ?? 'auto';
-      
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading settings: $e');
@@ -55,9 +55,9 @@ class SettingsService extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.clear();
-      
+
       _themeMode = 'auto';
-      
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error resetting settings: $e');

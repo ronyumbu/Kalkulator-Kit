@@ -10,7 +10,7 @@ class BasicCalculatorPage extends StatefulWidget {
 
 class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
   String _display = '0';
   String _previousValue = '0';
   String _operation = '';
@@ -19,7 +19,7 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
 
   void _onNumberPressed(String number) {
     setState(() {
-      if (_shouldResetDisplay) {
+      if (_shouldResetDisplay || _display.isEmpty) {
         _display = number;
         _shouldResetDisplay = false;
         _hasDecimal = false;
@@ -35,7 +35,7 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
 
   void _onDecimalPressed() {
     setState(() {
-      if (_shouldResetDisplay) {
+      if (_shouldResetDisplay || _display.isEmpty) {
         _display = '0.';
         _shouldResetDisplay = false;
         _hasDecimal = true;
@@ -50,16 +50,21 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
     setState(() {
       if (_operation.isNotEmpty && !_shouldResetDisplay) {
         _calculateResult();
+        _previousValue = _display; // Update previous value after calculation
+      } else {
+        _previousValue = _display;
       }
-      _previousValue = _display;
       _operation = op;
       _shouldResetDisplay = true;
+      // Clear display immediately after operation is pressed
+      _display = '';
+      _hasDecimal = false;
     });
   }
 
   void _calculateResult() {
     if (_operation.isEmpty) return;
-    
+
     double prev = double.tryParse(_previousValue) ?? 0;
     double current = double.tryParse(_display) ?? 0;
     double result = 0;
@@ -142,7 +147,7 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
     setState(() {
       double value = double.tryParse(_display) ?? 0;
       double result = value / 100;
-      
+
       if (result == result.toInt()) {
         _display = result.toInt().toString();
       } else {
@@ -164,6 +169,11 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
   }
 
   String _formatDisplay(String value) {
+    // Return '0' if value is empty
+    if (value.isEmpty) {
+      return '0';
+    }
+    
     // Add thousand separators for whole numbers
     if (!value.contains('.')) {
       final number = int.tryParse(value);
@@ -180,7 +190,7 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -202,7 +212,6 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
             tooltip: 'Menu',
           ),
         ),
-
       ),
       drawer: const MainDrawer(),
       body: Column(
@@ -359,7 +368,7 @@ class _CalculatorButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return GridView.count(
       crossAxisCount: 4,
       crossAxisSpacing: 12,
@@ -518,7 +527,7 @@ class _CalculatorButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Material(
       color: color,
       borderRadius: BorderRadius.circular(12),

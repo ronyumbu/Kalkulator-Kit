@@ -151,10 +151,10 @@ class CalculationResult extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    Icons.person, 
+                    Icons.person,
                     color: Theme.of(context).brightness == Brightness.dark
                         ? Colors.green[300]
-                        : Colors.green[700], 
+                        : Colors.green[700],
                     size: 24,
                   ),
                   const SizedBox(width: 12),
@@ -167,7 +167,8 @@ class CalculationResult extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: Theme.of(context).brightness == Brightness.dark
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white70
                                 : Colors.black87,
                           ),
@@ -179,7 +180,8 @@ class CalculationResult extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).brightness == Brightness.dark
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
                                 ? Colors.green[300]
                                 : Colors.green[700],
                           ),
@@ -256,7 +258,7 @@ class CalculationResult extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                fontSize: 14, 
+                fontSize: 14,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Colors.white70
                     : Colors.black87,
