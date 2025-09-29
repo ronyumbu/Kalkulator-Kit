@@ -47,6 +47,15 @@ Proyek aplikasi android sederhana pakai Flutter.
 - Format HH:MM: tampilan waktu tanpa detik untuk kemudahan baca
 - Keypad khusus dengan tombol angka, 00, dan operator
 
+### 📅 Kalkulator Tanggal
+- **Dua Mode Perhitungan**: Selisih antara dua tanggal atau tambah/kurang hari
+- **Mode Selisih Tanggal**: Hitung jumlah hari antara tanggal awal dan akhir
+- **Mode Tambah/Kurang Hari**: Tambah atau kurangi hari dari tanggal tertentu
+- **Calendar Picker**: Pilih tanggal dengan kalender yang mudah digunakan
+- **Stepper Input**: Input jumlah hari dengan tombol +/- atau manual
+- **Validasi Range**: Validasi tanggal dari tahun 1900-2100
+- **Hasil Detail**: Dialog menampilkan tanggal lengkap dengan nama hari
+
 ### 🎨 UI/UX Modern
 - **Material Design 3**: Desain modern dan konsisten
 - **Hamburger Menu**: Navigasi yang mudah dan konsisten di semua halaman
@@ -64,6 +73,7 @@ lib/
 │   ├── fuel_calculator_page.dart
 │   ├── quota_calculator_page.dart
 │   ├── time_calculator_page.dart
+│   ├── date_calculator_page.dart
 │   ├── bmi_calculator_page.dart
 │   └── about_page.dart
 ├── widgets/                     # Komponen UI
@@ -76,6 +86,7 @@ lib/
 │   ├── calculation_service.dart
 │   ├── quota_calculation_service.dart
 │   ├── time_calculation_service.dart
+│   ├── date_calculation_service.dart
 │   └── bmi_calculation_service.dart
 └── utils/                       # Utilities
     └── currency_formatter.dart
@@ -107,36 +118,6 @@ lib/
 ## 📱 Platform pada pengujian ini
 
 - ✅ **Android**
-
-## 🎯 Usage Example
-
-### Kalkulator Basic
-- **Operasi Dasar**: 123 + 456 = 579
-- **Toggle Tanda**: 5 → +/- → -5 → +/- → 5
-- **Persentase**: 50 → % → 0.5 (50% menjadi 0.5)
-- **Desimal**: 3.14 × 2 = 6.28
-- **Format**: 1,234,567 (otomatis dengan pemisah ribuan)
-
-### Kalkulator BBM
-- **Input**: Jarak 100km, efisiensi 12km/L, harga Rp15.000/L
-- **Output**: Total biaya, biaya per km, breakdown detail
-
-### Kalkulator BMI
-- **Input**: Pria, Tinggi 170 cm, Berat 65 kg
-- **Output**: BMI ≈ 22.5, Kategori: Normal (warna hijau)
-
-### Kalkulator Kuota  
-- Tanpa input opsional:
-   - **Input**: Sisa 10GB, masa tenggang 30 hari
-   - **Output**: Batas penggunaan ~0.33GB per hari
-- Dengan input opsional:
-   - **Input**: Sisa 12GB, Total Beli Kuota 50GB, masa tenggang 30 hari
-   - **Output**: Batas penggunaan ~0.40GB per hari, dan "Kuota Terpakai" = 38GB
-
-### Kalkulator Waktu
-- Contoh: 23:50 + 02:00 = Dual result: 25:50 dan 01:50
-- Format HH:MM untuk kemudahan baca (tanpa detik)
-- Hasil otomatis menampilkan kedua format jika melebihi 24 jam
 
 ## 🧪 Testing
 
