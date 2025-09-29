@@ -17,7 +17,7 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
   final List<String> _leftDigits = [];
   final List<String> _rightDigits = [];
   String? _op; // '+', '-', '*', '/'
-  String _result = '00:00:00';
+  String _result = '00:00';
   String? _error;
 
   void _onKey(String key) {
@@ -65,7 +65,7 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
     _leftDigits.clear();
     _rightDigits.clear();
     _op = null;
-    _result = '00:00:00';
+    _result = '00:00';
     _error = null;
   }
 
@@ -129,12 +129,7 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
     final rem = totalSeconds % 3600;
     final m = rem ~/ 60;
     String two(int v) => v.toString().padLeft(2, '0');
-    if (h == 0) {
-      // Show M:MM (no leading zero for hours) when hour == 0
-      final mText = m.toString();
-      return '$mText:00';
-    }
-    return '${h.toString().padLeft(2, '0')}:${two(m)}';
+    return '${two(h)}:${two(m)}';
   }
 
   // Format digits ke HH:MM untuk evaluasi
@@ -170,12 +165,11 @@ class _TimeCalculatorPageState extends State<TimeCalculatorPage> {
     final parts = hhmm.split(':');
     if (parts.length != 2) return hhmm; // fallback
     final h = int.parse(parts[0]);
-    final m = parts[1];
+    final m = int.parse(parts[1]);
 
-    if (h == 0) {
-      return '${int.parse(m)}:00';
-    }
-    return hhmm;
+    // Always return HH:MM format, no special case for h==0
+    String two(int v) => v.toString().padLeft(2, '0');
+    return '${two(h)}:${two(m)}';
   }
 
   // Helper to attempt evaluation for chaining
@@ -463,7 +457,7 @@ class _ExpressionDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     final leftSecs = _parseDigitsToSeconds(leftDigits);
     final leftText = formatSecondsForDisplay(leftSecs);
-    String text = leftText.isEmpty ? '00:00' : leftText;
+    String text = leftDigits.isEmpty ? '00:00' : leftText;
     if (operatorSymbol != null) {
       text += ' $operatorSymbol';
       if (operatorSymbol == '*' || operatorSymbol == '/') {

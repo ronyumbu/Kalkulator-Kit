@@ -81,7 +81,7 @@ class TimeCalculationService {
   }
 
   // Evaluasi ekspresi sederhana: <operand1> <op> <operand2>
-  // Operan bisa berupa waktu (HH:MM:SS) atau angka.
+  // Operan bisa berupa waktu (HH:MM) atau angka.
   // Hanya waktu-waktu untuk +/-, dan waktu-angka (atau angka-waktu untuk *) untuk operasi * dan waktu-angka untuk /.
   static String evaluate(String expression) {
     final exp = expression.trim();
