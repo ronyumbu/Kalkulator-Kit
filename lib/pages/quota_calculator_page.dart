@@ -30,22 +30,50 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
   Future<void> _selectCurrentDate() async {
     final DateTime initialDate = _currentDate;
 
-    final DateTime? picked = await showDialog<DateTime>(
+    final DateTime? picked = await showDatePicker(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Pilih Tanggal Mulai', textAlign: TextAlign.center),
-          content: SizedBox(
-            width: double.maxFinite,
-            height: 400,
-            child: CalendarDatePicker(
-              initialDate: initialDate,
-              firstDate: DateTime.now().subtract(const Duration(days: 365)),
-              lastDate: DateTime.now().add(const Duration(days: 30)),
-              onDateChanged: (DateTime date) {
-                Navigator.of(context).pop(date);
-              },
+      initialDate: initialDate,
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 30)),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Colors.green[600],
             ),
+            dialogTheme: DialogThemeData(
+              actionsPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[600],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                elevation: 1,
+                minimumSize: const Size(60, 36),
+              ),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.green[600],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                elevation: 1,
+                minimumSize: const Size(60, 36),
+              ),
+            ),
+          ),
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            alignment: Alignment.center,
+            child: child!,
           ),
         );
       },
@@ -69,34 +97,51 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
     final DateTime initialDate =
         _selectedDate ?? _currentDate.add(const Duration(days: 30));
 
-    final DateTime? picked = await showDialog<DateTime>(
+    final DateTime? picked = await showDatePicker(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Pilih Tanggal Masa Tenggang',
-            textAlign: TextAlign.center,
-          ),
-          content: SizedBox(
-            width: double.maxFinite,
-            height: 400,
-            child: CalendarDatePicker(
-              initialDate: initialDate,
-              firstDate: _currentDate.add(const Duration(days: 1)),
-              lastDate: _currentDate.add(const Duration(days: 365)),
-              onDateChanged: (DateTime date) {
-                // Langsung tutup dialog dan return tanggal yang dipilih
-                Navigator.of(context).pop(date);
-              },
+      initialDate: initialDate,
+      firstDate: _currentDate.add(const Duration(days: 1)),
+      lastDate: _currentDate.add(const Duration(days: 365)),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Colors.green[600],
+            ),
+            dialogTheme: DialogThemeData(
+              actionsPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[600],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                elevation: 1,
+                minimumSize: const Size(60, 36),
+              ),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.green[600],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                elevation: 1,
+                minimumSize: const Size(60, 36),
+              ),
             ),
           ),
-          contentPadding: const EdgeInsets.all(16),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Batal'),
-            ),
-          ],
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            alignment: Alignment.center,
+            child: child!,
+          ),
         );
       },
     );

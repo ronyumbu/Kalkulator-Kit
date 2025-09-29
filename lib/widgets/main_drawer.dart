@@ -120,6 +120,18 @@ class MainDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/date');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.cake, color: Colors.teal),
+            title: const Text(
+              'Kalkulator Usia',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Hitung usia dari tanggal lahir'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/age');
+            },
+          ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.settings, color: Colors.grey),

@@ -117,51 +117,52 @@ class _DateCalculatorPageState extends State<DateCalculatorPage> {
     final DateTime initialDate = isStartDate
         ? _startDate
         : (_selectedMode == DateCalculationMode.difference ? _endDate : _baseDate);
-    
-    String title;
-    if (_selectedMode == DateCalculationMode.difference) {
-      title = isStartDate ? 'Pilih Tanggal Awal' : 'Pilih Tanggal Akhir';
-    } else {
-      title = 'Pilih Tanggal Dasar';
-    }
 
-    final DateTime? picked = await showDialog<DateTime>(
+    final DateTime? picked = await showDatePicker(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title, textAlign: TextAlign.center),
-          content: SizedBox(
-            width: double.maxFinite,
-            height: 400,
-            child: CalendarDatePicker(
-              initialDate: initialDate,
-              firstDate: DateTime(1900),
-              lastDate: DateTime(2100),
-              onDateChanged: (DateTime date) {
-                // Langsung tutup dialog dan return tanggal yang dipilih
-                Navigator.of(context).pop(date);
-              },
+      initialDate: initialDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Colors.indigo[600],
             ),
-          ),
-          contentPadding: const EdgeInsets.all(16),
-          backgroundColor: Theme.of(context).brightness == Brightness.dark
-              ? const Color(0xFF1C1C1C)
-              : Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(
-                'Batal',
-                style: TextStyle(
-                  color: Colors.indigo[600],
-                  fontWeight: FontWeight.w600,
+            dialogTheme: DialogThemeData(
+              actionsPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo[600],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
                 ),
+                elevation: 1,
+                minimumSize: const Size(60, 36),
               ),
             ),
-          ],
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.indigo[600],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                elevation: 1,
+                minimumSize: const Size(60, 36),
+              ),
+            ),
+          ),
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            alignment: Alignment.center,
+            child: child!,
+          ),
         );
       },
     );

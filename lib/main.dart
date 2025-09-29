@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'pages/splash_screen.dart';
 import 'pages/basic_calculator_page.dart';
@@ -8,6 +9,7 @@ import 'pages/about_page.dart';
 import 'pages/time_calculator_page.dart';
 import 'pages/bmi_calculator_page.dart';
 import 'pages/date_calculator_page.dart';
+import 'pages/age_calculator_page.dart';
 import 'pages/settings_page.dart';
 import 'services/settings_service.dart';
 
@@ -45,11 +47,28 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: 'Kalkulator Kit',
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('id', 'ID'), // Indonesian
+              Locale('en', 'US'), // English
+            ],
+            locale: const Locale('id', 'ID'),
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
               useMaterial3: true,
               fontFamily: 'Roboto',
-              scaffoldBackgroundColor: Colors.grey[50],
+              scaffoldBackgroundColor: Colors.grey[200],
+              cardTheme: CardThemeData(
+                color: Colors.white,
+                elevation: 2,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                ),
+              ),
             ),
             darkTheme: ThemeData(
               colorScheme: ColorScheme.fromSeed(
@@ -123,6 +142,7 @@ class _MyAppState extends State<MyApp> {
               '/time': (context) => const TimeCalculatorPage(),
               '/bmi': (context) => const BMICalculatorPage(),
               '/date': (context) => const DateCalculatorPage(),
+              '/age': (context) => const AgeCalculatorPage(),
               '/settings': (context) => const SettingsPage(),
               '/about': (context) => const AboutPage(),
             },

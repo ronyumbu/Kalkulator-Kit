@@ -56,11 +56,21 @@ Proyek aplikasi android sederhana pakai Flutter.
 - **Validasi Range**: Validasi tanggal dari tahun 1900-2100
 - **Hasil Detail**: Dialog menampilkan tanggal lengkap dengan nama hari
 
+### 🎂 Kalkulator Usia
+- **Hitung Usia Detail**: Dari tanggal lahir hingga sekarang dalam format lengkap
+- **Date Picker**: Pilih tanggal lahir dengan kalender (mendukung hingga 150 tahun lalu)
+- **Format Lengkap**: Tampilkan usia dalam "X tahun, Y bulan, Z hari"
+- **Perhitungan Total**: Menampilkan total dalam berbagai format:
+  - Total tahun, bulan, minggu, hari
+  - Total jam, menit, dan detik hidup
+- **Format Angka**: Pemisah ribuan otomatis (1.234.567)
+- **Validasi**: Tanggal lahir tidak boleh di masa depan
+
 ### 🎨 UI/UX Modern
 - **Material Design 3**: Desain modern dan konsisten
+- **Dark Mode Support**: Mode gelap otomatis mengikuti pengaturan sistem
 - **Hamburger Menu**: Navigasi yang mudah dan konsisten di semua halaman
-- **Dialog Popup**: Hasil perhitungan dalam dialog yang informatif dan cantik
-- **Responsive Design**: Tampilan optimal di berbagai ukuran layar
+- **Dialog Popup**: Hasil perhitungan dalam dialog yang informatif
 
 ## 🏗️ Struktur Proyek
 
@@ -74,7 +84,9 @@ lib/
 │   ├── quota_calculator_page.dart
 │   ├── time_calculator_page.dart
 │   ├── date_calculator_page.dart
+│   ├── age_calculator_page.dart # Kalkulator usia (baru!)
 │   ├── bmi_calculator_page.dart
+│   ├── settings_page.dart       # Pengaturan tema
 │   └── about_page.dart
 ├── widgets/                     # Komponen UI
 │   ├── main_drawer.dart
@@ -87,7 +99,9 @@ lib/
 │   ├── quota_calculation_service.dart
 │   ├── time_calculation_service.dart
 │   ├── date_calculation_service.dart
-│   └── bmi_calculation_service.dart
+│   ├── age_calculation_service.dart # Service untuk kalkulator usia (baru!)
+│   ├── bmi_calculation_service.dart
+│   └── settings_service.dart    # Service pengaturan tema
 └── utils/                       # Utilities
     └── currency_formatter.dart
 ```
