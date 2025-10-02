@@ -35,7 +35,7 @@ class AreaResultDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withAlpha((0.1 * 255).toInt()),
               blurRadius: 20,
               spreadRadius: 5,
             ),
@@ -50,7 +50,7 @@ class AreaResultDialog extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [color.withOpacity(0.8), color],
+                  colors: [color.withAlpha((0.8 * 255).toInt()), color],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -64,7 +64,7 @@ class AreaResultDialog extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withAlpha((0.2 * 255).toInt()),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: customIcon ?? Icon(icon!, color: Colors.white, size: 40),
@@ -102,9 +102,9 @@ class AreaResultDialog extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.1),
+                      color: color.withAlpha((0.1 * 255).toInt()),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: color.withOpacity(0.3)),
+                      border: Border.all(color: color.withAlpha((0.3 * 255).toInt())),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,12 +142,12 @@ class AreaResultDialog extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+                        colors: [color.withAlpha((0.1 * 255).toInt()), color.withAlpha((0.05 * 255).toInt())],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: color.withOpacity(0.3)),
+                      border: Border.all(color: color.withAlpha((0.3 * 255).toInt())),
                     ),
                     child: Column(
                       children: [

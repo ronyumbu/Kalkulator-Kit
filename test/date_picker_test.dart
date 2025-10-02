@@ -68,15 +68,7 @@ void main() {
     expect(cancelButton, findsOneWidget);
     expect(okButton, findsOneWidget);
 
-    print('✅ Date picker opened successfully');
-    print('✅ Cancel and OK buttons found');
-    print('✅ Custom theme applied to date picker');
-    print('✅ Buttons should now be styled with colored background and centered');
-    print('');
-    print('SUMMARY:');
-    print('- Tombol OKE dan Batal sudah dihias dengan background berwarna');
-    print('- actionsPadding diatur untuk posisi yang lebih baik'); 
-    print('- Container alignment center untuk memposisikan dialog');
-    print('- Implementasi diterapkan di semua kalkulator (usia, tanggal, kuota)');
+  // Informational: date picker opened, buttons found, and theme applied.
+  // Assertions above validate these behaviors; avoid using print() in tests.
   });
 }

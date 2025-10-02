@@ -220,7 +220,7 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withAlpha((0.2 * 255).toInt()),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(

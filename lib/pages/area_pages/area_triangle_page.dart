@@ -81,8 +81,8 @@ class _AreaTrianglePageState extends State<AreaTrianglePage> {
                 child: Row(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withAlpha((0.2 * 255).toInt()),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       padding: const EdgeInsets.all(12),
