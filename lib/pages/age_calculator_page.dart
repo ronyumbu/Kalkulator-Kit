@@ -15,6 +15,7 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
   
   DateTime? _selectedBirthDate;
   bool _isLoading = false;
+  String? _errorMessage;
 
   Future<void> _selectBirthDate() async {
     final now = DateTime.now();
@@ -78,6 +79,9 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
 
   Future<void> _calculateAge() async {
     if (_selectedBirthDate == null) {
+      setState(() {
+        _errorMessage = 'Silakan pilih tanggal lahir terlebih dahulu';
+      });
       _showSnackBar('Silakan pilih tanggal lahir terlebih dahulu');
       return;
     }
@@ -134,6 +138,7 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
     setState(() {
       _selectedBirthDate = null;
       _isLoading = false;
+      _errorMessage = null;
     });
     
     // Haptic feedback
@@ -167,215 +172,277 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
         ],
       ),
       drawer: const MainDrawer(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header Card
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.teal[600]!, Colors.teal[400]!],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.cake,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      const Expanded(
-                        child: Text(
-                          'Kalkulator Usia',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  const Text(
-                    'Hitung usia Anda secara detail dari tanggal lahir hingga sekarang.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                      height: 1.4,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Birth Date Selection Card
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
+              child: IntrinsicHeight(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Tanggal Lahir',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    
-                    // Date Selection Button
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: isDark 
-                            ? const Color(0xFF404040)
-                            : Colors.grey[50],
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: isDark 
-                              ? const Color(0xFF555555)
-                              : Colors.grey[300]!,
+                    if (_errorMessage != null) ...[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          _errorMessage!,
+                          style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 16),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: _selectBirthDate,
-                          borderRadius: BorderRadius.circular(12),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  _selectedBirthDate != null
-                                      ? AgeCalculationService.formatDate(_selectedBirthDate!)
-                                      : 'Tap untuk pilih tanggal lahir',
+                    ],
+                    // Header Card
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.teal[600]!, Colors.teal[400]!],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.2),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Icon(
+                                  Icons.cake,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              const Expanded(
+                                child: Text(
+                                  'Kalkulator Usia',
                                   style: TextStyle(
-                                    fontSize: 16,
-                                    color: _selectedBirthDate != null
-                                        ? (isDark ? Colors.white : Colors.black87)
-                                        : (isDark ? Colors.grey[400] : Colors.grey[600]),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
                                 ),
-                                Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.teal[600],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          const Text(
+                            'Hitung usia Anda secara detail dari tanggal lahir hingga sekarang.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              height: 1.4,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Instruction Card
+                    Card(
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: const [
+                                Icon(Icons.help_outline, color: Colors.teal, size: 20),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Cara Penggunaan',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Tap pada kolom "Tanggal Lahir" untuk memilih tanggal lahir Anda.\nPilih tanggal lahir Anda pada date picker.\nTap tombol "Hitung Usia" untuk melihat hasil usia Anda.\nTekan tombol Reset untuk mengulang perhitungan.',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ],
                         ),
                       ),
                     ),
 
-                    if (_selectedBirthDate != null) ...[
-                      const SizedBox(height: 16),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.teal[50],
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.teal[200]!),
-                        ),
-                        child: Row(
+                    const SizedBox(height: 24),
+
+                    // Birth Date Selection Card
+                    Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.info_outline,
-                              color: Colors.teal[600],
-                              size: 20,
+                            Text(
+                              'Tanggal Lahir',
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                'Tanggal lahir: ${AgeCalculationService.formatDate(_selectedBirthDate!)}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.teal[700],
-                                  fontWeight: FontWeight.w500,
+                            const SizedBox(height: 16),
+                            // Date Selection Button
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: isDark 
+                                    ? const Color(0xFF404040)
+                                    : Colors.grey[50],
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: isDark 
+                                      ? const Color(0xFF555555)
+                                      : Colors.grey[300]!,
+                                ),
+                              ),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: _selectBirthDate,
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          _selectedBirthDate != null
+                                              ? AgeCalculationService.formatDate(_selectedBirthDate!)
+                                              : 'Tap untuk pilih tanggal lahir',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: _selectedBirthDate != null
+                                                ? (isDark ? Colors.white : Colors.black87)
+                                                : (isDark ? Colors.grey[400] : Colors.grey[600]),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.calendar_today,
+                                          color: Colors.teal[600],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
+
+                            if (_selectedBirthDate != null) ...[
+                              const SizedBox(height: 16),
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.teal[50],
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: Colors.teal[200]!),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.info_outline,
+                                      color: Colors.teal[600],
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        'Tanggal lahir: ${AgeCalculationService.formatDate(_selectedBirthDate!)}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.teal[700],
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ],
                         ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Calculate Button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: _isLoading ? null : _calculateAge,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal[600],
+                          foregroundColor: Colors.white,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                              )
+                            : const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.calculate, size: 20),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Hitung Usia',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ),
+                    if (_errorMessage != null) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        _errorMessage!,
+                        style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ],
                 ),
               ),
             ),
-
-            const SizedBox(height: 24),
-
-            // Calculate Button
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: _isLoading ? null : _calculateAge,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal[600],
-                  foregroundColor: Colors.white,
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: _isLoading
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                        ),
-                      )
-                    : const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.calculate, size: 20),
-                          SizedBox(width: 8),
-                          Text(
-                            'Hitung Usia',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-
-
-          ],
-        ),
+          );
+        },
       ),
     );
   }

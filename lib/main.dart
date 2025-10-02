@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'pages/area_pages/area_calculator_page.dart';
+import 'pages/area_pages/area_square_page.dart';
+import 'pages/area_pages/area_rectangle_page.dart';
+import 'pages/area_pages/area_triangle_page.dart';
+import 'pages/area_pages/area_parallelogram_page.dart';
+import 'pages/area_pages/area_trapezoid_page.dart';
+import 'pages/area_pages/area_rhombus_page.dart';
+import 'pages/area_pages/area_circle_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'pages/splash_screen.dart';
@@ -145,6 +153,14 @@ class _MyAppState extends State<MyApp> {
               '/age': (context) => const AgeCalculatorPage(),
               '/settings': (context) => const SettingsPage(),
               '/about': (context) => const AboutPage(),
+              '/area_calculator': (context) => const AreaCalculatorPage(),
+              '/area_square': (context) => const AreaSquarePage(),
+              '/area_rectangle': (context) => const AreaRectanglePage(),
+              '/area_triangle': (context) => const AreaTrianglePage(),
+              '/area_parallelogram': (context) => const AreaParallelogramPage(),
+              '/area_trapezoid': (context) => const AreaTrapezoidPage(),
+              '/area_rhombus': (context) => const AreaRhombusPage(),
+              '/area_circle': (context) => const AreaCirclePage(),
             },
           );
         },

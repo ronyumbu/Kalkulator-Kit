@@ -54,7 +54,7 @@ class MainDrawer extends StatelessWidget {
               'Kalkulator',
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            subtitle: const Text('Kalkulator dasar angka'),
+            subtitle: const Text('Kalkulator angka dasar'),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed('/calculator');
@@ -130,6 +130,18 @@ class MainDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed('/age');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.straighten, color: Colors.pink),
+            title: const Text(
+              'Kalkulator Luas',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Hitung Luas bangun datar'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/area_calculator');
             },
           ),
           const Divider(),

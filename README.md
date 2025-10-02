@@ -66,6 +66,16 @@ Proyek aplikasi android sederhana pakai Flutter.
 - **Format Angka**: Pemisah ribuan otomatis (1.234.567)
 - **Validasi**: Tanggal lahir tidak boleh di masa depan
 
+### ⬜ Kalkulator Luas Bangun
+- **7 Bangun Datar**: Persegi, Persegi Panjang, Segitiga, Jajar Genjang, Trapesium, Layang-layang, Lingkaran
+- **Icon Akurat**: Icon custom untuk bangun geometri (Trapesium, Jajar Genjang, Layang-layang)
+- **Color Coding**: Setiap bangun memiliki warna konsisten di card, tombol, dan dialog
+- **Validasi Input**: Semua input wajib diisi dan harus berupa angka positif
+- **Format Hasil**: Angka hasil dengan pemisah ribuan untuk kemudahan membaca
+- **Dialog Modern**: Pop-up hasil dengan gradient header, icon matching, dan format yang rapi
+- **Layout Responsif**: SingleChildScrollView untuk menghindari overflow saat keyboard muncul
+- **Formula Display**: Menampilkan rumus yang digunakan dalam dialog hasil
+
 ### 🎨 UI/UX Modern
 - **Material Design 3**: Desain modern dan konsisten
 - **Dark Mode Support**: Mode gelap otomatis mengikuti pengaturan sistem
@@ -86,6 +96,15 @@ lib/
 │   ├── date_calculator_page.dart
 │   ├── age_calculator_page.dart # Kalkulator usia (baru!)
 │   ├── bmi_calculator_page.dart
+│   ├── area_pages/              # Folder kalkulator luas bangun
+│   │   ├── area_calculator_page.dart # Menu utama kalkulator luas bangun
+│   │   ├── area_square_page.dart    # Luas persegi
+│   │   ├── area_rectangle_page.dart # Luas persegi panjang
+│   │   ├── area_triangle_page.dart  # Luas segitiga
+│   │   ├── area_parallelogram_page.dart # Luas jajar genjang
+│   │   ├── area_trapezoid_page.dart # Luas trapesium
+│   │   ├── area_rhombus_page.dart   # Luas layang-layang
+│   │   └── area_circle_page.dart    # Luas lingkaran
 │   ├── settings_page.dart       # Pengaturan tema
 │   └── about_page.dart
 ├── widgets/                     # Komponen UI
@@ -93,7 +112,9 @@ lib/
 │   ├── fuel_result_dialog.dart
 │   ├── time_keypad.dart
 │   ├── quota_result_dialog.dart
-│   └── bmi_result_dialog.dart
+│   ├── bmi_result_dialog.dart
+│   ├── area_result_dialog.dart  # Dialog hasil luas bangun
+│   └── custom_shape_icons.dart  # Icon custom untuk bangun geometri
 ├── services/                    # Business logic
 │   ├── calculation_service.dart
 │   ├── quota_calculation_service.dart
@@ -101,9 +122,11 @@ lib/
 │   ├── date_calculation_service.dart
 │   ├── age_calculation_service.dart # Service untuk kalkulator usia (baru!)
 │   ├── bmi_calculation_service.dart
+│   ├── area_calculation_service.dart # Service untuk kalkulator luas bangun
 │   └── settings_service.dart    # Service pengaturan tema
 └── utils/                       # Utilities
-    └── currency_formatter.dart
+    ├── currency_formatter.dart
+    └── number_formatter.dart   # Format angka dengan pemisah ribuan
 ```
 
 ## 🚀 Quick Start

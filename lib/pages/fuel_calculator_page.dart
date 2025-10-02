@@ -168,11 +168,7 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue[600]!, Colors.blue[400]!],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: const Color(0xFFFF9800), // Orange BBM icon color
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(

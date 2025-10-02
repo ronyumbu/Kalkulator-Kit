@@ -194,24 +194,7 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text(
-          'Kalkulator',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              try {
-                Scaffold.of(context).openDrawer();
-              } catch (e) {
-                _scaffoldKey.currentState?.openDrawer();
-              }
-            },
-            tooltip: 'Menu',
-          ),
-        ),
+        title: const Text('Kalkulator'),
       ),
       drawer: const MainDrawer(),
       body: Column(
@@ -237,7 +220,7 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
+                        color: Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(
@@ -247,9 +230,9 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'Kalkulator Dasar',
+                        'Kalkulator Angka Dasar',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -271,70 +254,76 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
               ],
             ),
           ),
-
-          // Display area - smaller
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF2C2C2C) : Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: isDark ? const Color(0xFF404040) : Colors.grey[300]!,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (_operation.isNotEmpty) ...[
-                  Text(
-                    '${_formatDisplay(_previousValue)} $_operation',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Display area - smaller
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: isDark ? const Color(0xFF2C2C2C) : Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isDark ? const Color(0xFF404040) : Colors.grey[300]!,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (_operation.isNotEmpty) ...[
+                          Text(
+                            '${_formatDisplay(_previousValue)} $_operation',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: isDark ? Colors.grey[400] : Colors.grey[600],
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                        ],
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          reverse: true,
+                          child: Text(
+                            _formatDisplay(_display),
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: isDark ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  // Calculator buttons in card
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    decoration: BoxDecoration(
+                      color: isDark ? const Color(0xFF2C2C2C) : Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isDark ? const Color(0xFF404040) : Colors.grey[300]!,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: _CalculatorButtons(
+                        onNumberPressed: _onNumberPressed,
+                        onDecimalPressed: _onDecimalPressed,
+                        onOperationPressed: _onOperationPressed,
+                        onEqualsPressed: _onEqualsPressed,
+                        onClearPressed: _onClearPressed,
+                        onDeletePressed: _onDeletePressed,
+                        onToggleSignPressed: _onToggleSignPressed,
+                        onPercentagePressed: _onPercentagePressed,
+                      ),
+                    ),
+                  ),
                 ],
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  reverse: true,
-                  child: Text(
-                    _formatDisplay(_display),
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Calculator buttons in card
-          Container(
-            margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF2C2C2C) : Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: isDark ? const Color(0xFF404040) : Colors.grey[300]!,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: _CalculatorButtons(
-                onNumberPressed: _onNumberPressed,
-                onDecimalPressed: _onDecimalPressed,
-                onOperationPressed: _onOperationPressed,
-                onEqualsPressed: _onEqualsPressed,
-                onClearPressed: _onClearPressed,
-                onDeletePressed: _onDeletePressed,
-                onToggleSignPressed: _onToggleSignPressed,
-                onPercentagePressed: _onPercentagePressed,
               ),
             ),
           ),
