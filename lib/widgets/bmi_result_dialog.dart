@@ -51,6 +51,7 @@ class BMIResultDialog extends StatelessWidget {
     }
 
     final localizedCategory = localizedCategory0(category);
+  final recommendations = _getRecommendations(category.toLowerCase());
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: const EdgeInsets.all(16),
@@ -173,10 +174,12 @@ class BMIResultDialog extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     // Simple legend (Indonesian)
-                    const Text(
+                    Text(
                       'Klasifikasi Umum',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[300]
+                            : Colors.black87,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -191,7 +194,42 @@ class BMIResultDialog extends StatelessWidget {
 
                     const SizedBox(height: 16),
                     Text(
-                      'Catatan: BMI adalah indikator umum dan tidak mempertimbangkan komposisi tubuh secara detail.',
+                      'Rekomendasi Kesehatan',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[300]
+                            : Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: recommendations
+                          .map(
+                            (rec) => Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text('•', style: TextStyle(fontSize: 14)),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      rec,
+                                      style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Catatan: Sumber informasi rekomendasi kesehatan didapatkan dari berbagai sumber di internet.',
                       style: TextStyle(fontSize: 12, color: Colors.grey[700]),
                     ),
                   ],
@@ -241,5 +279,46 @@ class BMIResultDialog extends StatelessWidget {
         Text(label, style: const TextStyle(fontSize: 14)),
       ],
     );
+  }
+
+  List<String> _getRecommendations(String cat) {
+    switch (cat.toLowerCase()) {
+      case 'underweight':
+      case 'kekurangan berat badan':
+      case 'kekurangan':
+        return [
+          'Periksa penyebab berat badan rendah seperti penyakit atau gangguan kesehatan.',
+          'Tingkatkan asupan kalori dengan makanan sehat dan bergizi seimbang.',
+          'Makan lebih sering dengan porsi kecil agar tidak cepat kenyang.',
+          'Konsumsi minuman padat kalori dan nutrisi, misalnya susu atau jus buah.',
+          'Rutin berolahraga, terutama latihan kekuatan untuk membentuk otot dan menambah nafsu makan.',
+          'Konsultasi ke dokter untuk pemeriksaan dan penanganan lebih lanjut.',
+        ];
+      case 'normal':
+      case 'normalnya':
+        return [
+          'Pertahankan pola makan sehat dan aktivitas fisik teratur.',
+          'Hindari makanan olahan, makanan cepat saji, dan minuman tinggi gula.',
+          'Jaga gaya hidup sehat dengan tidur cukup, mengelola stres, dan menghindari kebiasaan buruk seperti merokok atau konsumsi alkohol berlebihan.',
+        ];
+      case 'overweight':
+      case 'kelebihan berat badan':
+      case 'kelebihan':
+        return [
+          'Mulai perbaiki pola makan dengan mengurangi kalori dari makanan berlemak dan gula.',
+          'Tingkatkan aktivitas fisik secara rutin, seperti berjalan, berlari, atau olahraga lainnya.',
+          'Monitor berat badan secara berkala dan konsultasi dengan tenaga kesehatan jika perlu.',
+        ];
+      case 'obese':
+      case 'obesitas':
+        return [
+          'Segera konsultasi dengan dokter untuk pemeriksaan dan rencana penurunan berat badan yang aman.',
+          'Terapkan diet seimbang rendah kalori tetapi tetap bergizi.',
+          'Tingkatkan aktivitas fisik secara konsisten.',
+          'Pertimbangkan penanganan medis tambahan jika disarankan oleh dokter.',
+        ];
+      default:
+        return [];
+    }
   }
 }
