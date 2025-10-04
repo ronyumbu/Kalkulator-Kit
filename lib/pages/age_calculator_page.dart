@@ -251,42 +251,6 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
 
                     const SizedBox(height: 24),
 
-                    // Instruction Card
-                    Card(
-                      elevation: 1,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(Icons.help_outline, color: Colors.teal, size: 20),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Cara Penggunaan',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              'Tap pada kolom "Tanggal Lahir" untuk memilih tanggal lahir Anda.\nPilih tanggal lahir Anda pada date picker.\nTap tombol "Hitung Usia" untuk melihat hasil usia Anda.\nTekan tombol Reset untuk mengulang perhitungan.',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 24),
-
                     // Birth Date Selection Card
                     Card(
                       elevation: 2,
