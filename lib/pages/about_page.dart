@@ -20,7 +20,6 @@ class AboutPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // App Info Header
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(24),
@@ -37,7 +36,7 @@ class AboutPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: Colors.white.withAlpha((0.2 * 255).toInt()),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: const Icon(
@@ -61,7 +60,6 @@ class AboutPage extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // Description
             Card(
               elevation: 2,
               shape: RoundedRectangleBorder(
@@ -77,12 +75,11 @@ class AboutPage extends StatelessWidget {
                         Icon(Icons.description, color: Colors.blue[600]),
                         const SizedBox(width: 8),
                         Text(
-                          'Deskripsi',
+                          'Tentang Aplikasi',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
+                            color: Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white
                                 : Colors.black87,
                           ),
@@ -91,7 +88,7 @@ class AboutPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Aplikasi ni tak kasi nama Kalkulator kit aja yakk, biar simpel aowkaowk',
+                      'Kalkulator Kit mengumpulkan beberapa kalkulator praktis dalam satu aplikasi untuk membantu perhitungan sehari-hari — dari operasi dasar hingga kalkulator spesifik seperti BMI, estimasi biaya bahan bakar, dan perhitungan luas bangun datar.',
                       style: TextStyle(
                         fontSize: 14,
                         color: Theme.of(context).brightness == Brightness.dark
@@ -106,14 +103,85 @@ class AboutPage extends StatelessWidget {
             ),
 
             const SizedBox(height: 16),
-            // (Fitur Utama dihapus sesuai permintaan)
 
-            // Developer Info
             Card(
               elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.star, color: Colors.blue[600]),
+                        const SizedBox(width: 8),
+                        Text('Fitur Utama', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87)),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Feature list with icons
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.calculate, size: 20, color: Colors.grey[700]),
+                            const SizedBox(width: 8),
+                            Expanded(child: Text('Kalkulator dasar untuk operasi aritmatika')),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.access_time, size: 20, color: Colors.grey[700]),
+                            const SizedBox(width: 8),
+                            Expanded(child: Text('Kalkulator waktu untuk penjumlahan/pengurangan jam:menit')),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.favorite, size: 20, color: Colors.grey[700]),
+                            const SizedBox(width: 8),
+                            Expanded(child: Text('Kalkulator BMI untuk perkiraan kategori kesehatan sederhana')),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.local_gas_station, size: 20, color: Colors.grey[700]),
+                            const SizedBox(width: 8),
+                            Expanded(child: Text('Kalkulator BBM dan Kuota untuk estimasi biaya dan alokasi')),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.square_foot, size: 20, color: Colors.grey[700]),
+                            const SizedBox(width: 8),
+                            Expanded(child: Text('Kalkulator luas untuk berbagai bangun datar')),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
+            ),
+
+            const SizedBox(height: 16),
+
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -121,15 +189,50 @@ class AboutPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.code, color: Colors.purple[600]),
+                        Icon(Icons.info_outline, color: Colors.blue[600]),
                         const SizedBox(width: 8),
                         Text(
-                          'Informasi Developer',
+                          'Panduan Singkat',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('1. Pilih jenis kalkulator dari menu.'),
+                    const Text('2. Isi nilai pada kolom yang tersedia.'),
+                    const Text('3. Tekan tombol "Hitung" untuk melihat hasil.'),
+                    const Text('4. Untuk mereset form, gunakan tombol refresh di pojok kanan atas.'),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.privacy_tip, color: Colors.green[700]),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Privasi & Dukungan',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white
                                 : Colors.black87,
                           ),
@@ -138,7 +241,7 @@ class AboutPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Aplikasi ini dikembangin pakek Flutter yang pakek desain Material Design 3. dibuat karna gabut dan lagi belajar flutter pakek bantuan AI wkwkwkwkwkwkwk.',
+                      'Aplikasi ini tidak mengumpulkan data pribadi. Semua perhitungan dilakukan secara lokal pada perangkat Anda.',
                       style: TextStyle(
                         fontSize: 14,
                         color: Theme.of(context).brightness == Brightness.dark
@@ -147,6 +250,7 @@ class AboutPage extends StatelessWidget {
                         height: 1.5,
                       ),
                     ),
+                    const SizedBox(height: 12),
                   ],
                 ),
               ),
@@ -154,10 +258,9 @@ class AboutPage extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // Copyright
             Center(
               child: Text(
-                '© 2025 Kalkulator Kit\nDikembangin karena gabut aowkoawok, sama sekalian belajar flutter dibantu AI xixixi',
+                '© 2025 Kalkulator Kit by Rony',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 12,

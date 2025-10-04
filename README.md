@@ -132,8 +132,8 @@ lib/
 ## 🚀 Quick Start
 
 ### Yang saya gunakan
-- Flutter SDK 3.24+
-- Dart SDK 3.9+
+- Flutter SDK 3.35.3
+- Dart SDK 3.9.2
 
 ### Instalasi
 
@@ -155,6 +155,7 @@ lib/
 ## 📱 Platform pada pengujian ini
 
 - ✅ **Android**
+- ✅ **Web**
 
 ## 🧪 Testing
 

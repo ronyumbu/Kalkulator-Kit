@@ -12,6 +12,7 @@ class AgeCalculatorPage extends StatefulWidget {
 
 class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late FocusNode _keyboardFocusNode;
   
   DateTime? _selectedBirthDate;
   bool _isLoading = false;
@@ -79,9 +80,7 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
 
   Future<void> _calculateAge() async {
     if (_selectedBirthDate == null) {
-      setState(() {
-        _errorMessage = 'Silakan pilih tanggal lahir terlebih dahulu';
-      });
+      // Only show a snackbar to avoid duplicating the same text in the page
       _showSnackBar('Silakan pilih tanggal lahir terlebih dahulu');
       return;
     }
@@ -146,6 +145,33 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _keyboardFocusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _keyboardFocusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _keyboardFocusNode.dispose();
+    super.dispose();
+  }
+
+  void _handleRawKey(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final key = event.logicalKey;
+      final ch = event.character ?? key.keyLabel;
+      if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+        _calculateAge();
+      } else if ((ch.toLowerCase()) == 'r') {
+        _resetCalculator();
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -172,18 +198,24 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
         ],
       ),
       drawer: const MainDrawer(),
-      body: LayoutBuilder(
+      body: RawKeyboardListener(
+        focusNode: _keyboardFocusNode,
+        onKey: _handleRawKey,
+        child: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: constraints.maxHeight,
-              ),
-              child: IntrinsicHeight(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 900),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                     if (_errorMessage != null) ...[
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -250,6 +282,41 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
                     ),
 
                     const SizedBox(height: 24),
+
+                    // Instruction Card (tests expect 'Cara Penggunaan' and some guidance text)
+                    Card(
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.08),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Icon(Icons.help_outline, size: 28),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text('Cara Penggunaan', style: TextStyle(fontWeight: FontWeight.bold)),
+                                  SizedBox(height: 8),
+                                  Text('1. Tap pada kolom "Tanggal Lahir" untuk membuka pemilih tanggal.'),
+                                  Text('2. Pilih tanggal lahir Anda.'),
+                                  Text('3. Tap tombol "Hitung Usia" untuk melihat hasil perhitungan.'),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
 
                     // Birth Date Selection Card
                     Card(
@@ -402,13 +469,16 @@ class _AgeCalculatorPageState extends State<AgeCalculatorPage> {
                       ),
                     ],
                   ],
+                    ),
+                  ),
                 ),
               ),
             ),
           );
         },
       ),
-    );
+    ),
+  );
   }
 }
 

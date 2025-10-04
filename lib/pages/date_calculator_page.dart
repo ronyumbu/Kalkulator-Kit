@@ -35,13 +35,32 @@ class _DateCalculatorPageState extends State<DateCalculatorPage> {
     super.initState();
     _daysController.addListener(_onDaysChanged);
     _daysFocusNode.addListener(_onFocusChanged);
+    _keyboardFocusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _keyboardFocusNode.requestFocus();
+    });
   }
 
   @override
   void dispose() {
     _daysController.dispose();
     _daysFocusNode.dispose();
+    _keyboardFocusNode.dispose();
     super.dispose();
+  }
+
+  late FocusNode _keyboardFocusNode;
+
+  void _handleRawKey(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final key = event.logicalKey;
+      final ch = event.character ?? key.keyLabel;
+      if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+        _calculate();
+      } else if ((ch.toLowerCase()) == 'r') {
+        _reset();
+      }
+    }
   }
 
   void _onFocusChanged() {
@@ -1530,8 +1549,15 @@ class _DateCalculatorPageState extends State<DateCalculatorPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Kalkulator Tanggal'),
-        centerTitle: true,
+        // Left-align title with a small left indent so it matches drawer/menu spacing
+        title: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Text(
+            'Kalkulator Tanggal',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+        ),
+        centerTitle: false,
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -1542,20 +1568,24 @@ class _DateCalculatorPageState extends State<DateCalculatorPage> {
         ],
       ),
       drawer: const MainDrawer(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildHeaderCard(),
-            const SizedBox(height: 16),
-            _buildModeSelector(),
-            const SizedBox(height: 16),
-            _buildDateInputs(),
-            const SizedBox(height: 16),
-            _buildActionButtons(),
-            const SizedBox(height: 32),
-          ],
+      body: RawKeyboardListener(
+        focusNode: _keyboardFocusNode,
+        onKey: _handleRawKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildHeaderCard(),
+              const SizedBox(height: 16),
+              _buildModeSelector(),
+              const SizedBox(height: 16),
+              _buildDateInputs(),
+              const SizedBox(height: 16),
+              _buildActionButtons(),
+              const SizedBox(height: 32),
+            ],
+          ),
         ),
       ),
     );

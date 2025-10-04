@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../widgets/main_drawer.dart';
 
 class BasicCalculatorPage extends StatefulWidget {
@@ -10,6 +11,7 @@ class BasicCalculatorPage extends StatefulWidget {
 
 class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late FocusNode _focusNode;
 
   String _display = '0';
   String _previousValue = '0';
@@ -187,6 +189,59 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
     return value;
   }
 
+  // Extracted keyboard handler from build to avoid deep nesting in the widget tree
+  void _handleRawKey(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final key = event.logicalKey;
+      // Digits and numpad
+      final label = event.character ?? key.keyLabel;
+      if (label.isNotEmpty) {
+        final ch = label;
+        if (RegExp(r'^\d$').hasMatch(ch)) {
+          _onNumberPressed(ch);
+          return;
+        }
+        if (ch == '.') {
+          _onDecimalPressed();
+          return;
+        }
+        if (ch == '+') {
+          _onOperationPressed('+');
+          return;
+        }
+        if (ch == '-') {
+          _onOperationPressed('-');
+          return;
+        }
+        if (ch == '*') {
+          _onOperationPressed('×');
+          return;
+        }
+        if (ch == '/') {
+          _onOperationPressed('÷');
+          return;
+        }
+        if (ch == '%') {
+          _onPercentagePressed();
+          return;
+        }
+        if (ch == '=') {
+          _onEqualsPressed();
+          return;
+        }
+      }
+      if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+        _onEqualsPressed();
+      } else if (key == LogicalKeyboardKey.backspace) {
+        _onDeletePressed();
+      } else if (key == LogicalKeyboardKey.delete) {
+        _onClearPressed();
+      } else if (key == LogicalKeyboardKey.escape) {
+        _onClearPressed();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -197,8 +252,11 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
         title: const Text('Kalkulator'),
       ),
       drawer: const MainDrawer(),
-      body: Column(
-        children: [
+      body: RawKeyboardListener(
+        focusNode: _focusNode,
+        onKey: _handleRawKey,
+        child: Column(
+          children: [
           // Header section
           Container(
             width: double.infinity,
@@ -256,80 +314,103 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // Display area - smaller
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.all(16),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF2C2C2C) : Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: isDark ? const Color(0xFF404040) : Colors.grey[300]!,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (_operation.isNotEmpty) ...[
-                          Text(
-                            '${_formatDisplay(_previousValue)} $_operation',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: isDark ? Colors.grey[400] : Colors.grey[600],
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                        ],
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          reverse: true,
-                          child: Text(
-                            _formatDisplay(_display),
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: isDark ? Colors.white : Colors.black,
-                            ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 560),
+                  child: Column(
+                    children: [
+                      // Display area - smaller
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: isDark ? const Color(0xFF2C2C2C) : Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: isDark ? const Color(0xFF404040) : Colors.grey[300]!,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  // Calculator buttons in card
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                    decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF2C2C2C) : Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: isDark ? const Color(0xFF404040) : Colors.grey[300]!,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (_operation.isNotEmpty) ...[
+                              Text(
+                                '${_formatDisplay(_previousValue)} $_operation',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ],
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              reverse: true,
+                              child: Text(
+                                _formatDisplay(_display),
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: isDark ? Colors.white : Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: _CalculatorButtons(
-                        onNumberPressed: _onNumberPressed,
-                        onDecimalPressed: _onDecimalPressed,
-                        onOperationPressed: _onOperationPressed,
-                        onEqualsPressed: _onEqualsPressed,
-                        onClearPressed: _onClearPressed,
-                        onDeletePressed: _onDeletePressed,
-                        onToggleSignPressed: _onToggleSignPressed,
-                        onPercentagePressed: _onPercentagePressed,
+
+                      // Calculator buttons in card
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        decoration: BoxDecoration(
+                          color: isDark ? const Color(0xFF2C2C2C) : Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: isDark ? const Color(0xFF404040) : Colors.grey[300]!,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: _CalculatorButtons(
+                            onNumberPressed: _onNumberPressed,
+                            onDecimalPressed: _onDecimalPressed,
+                            onOperationPressed: _onOperationPressed,
+                            onEqualsPressed: _onEqualsPressed,
+                            onClearPressed: _onClearPressed,
+                            onDeletePressed: _onDeletePressed,
+                            onToggleSignPressed: _onToggleSignPressed,
+                            onPercentagePressed: _onPercentagePressed,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
         ],
       ),
-    );
+    ),
+  );
+}
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+    // Request focus after first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _focusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 }
 
@@ -358,14 +439,23 @@ class _CalculatorButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return GridView.count(
-      crossAxisCount: 4,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      childAspectRatio: 1.2,
-      children: [
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        const cross = 4;
+        const spacing = 12.0;
+        // target button height in logical pixels
+        const targetHeight = 64.0;
+        final cellWidth = (width - (spacing * (cross - 1))) / cross;
+        double aspect = (cellWidth / targetHeight).clamp(0.8, 1.6);
+        return GridView.count(
+          crossAxisCount: cross,
+          crossAxisSpacing: spacing,
+          mainAxisSpacing: spacing,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          childAspectRatio: aspect,
+          children: [
         // Row 1
         _CalculatorButton(
           text: 'C',
@@ -496,6 +586,8 @@ class _CalculatorButtons extends StatelessWidget {
           textColor: Colors.white,
         ),
       ],
+    );
+      },
     );
   }
 }

@@ -34,13 +34,14 @@ class TimeKeypad extends StatelessWidget {
       builder: (context, constraints) {
         final width = constraints.maxWidth;
         const spacing = 12.0;
-        final cellWidth = (width - (spacing * 3)) / 4; // 4 columns
-        final wideWidth =
-            cellWidth * 1.5 +
-            (spacing / 2); // makes AC and C equal and fill the row with '÷'
+        final columns = 4;
+        final cellWidth = (width - (spacing * (columns - 1))) / columns;
+        // Target height so buttons are roughly square-ish
+        final targetHeight = cellWidth * 0.9;
+        final wideWidth = cellWidth * 1.5 + (spacing / 2);
         return Wrap(
           spacing: spacing,
-          runSpacing: 12,
+          runSpacing: spacing,
           children: buttons.map((b) {
             final label = b.label;
             final value = b.mapTo ?? label;
@@ -51,41 +52,40 @@ class TimeKeypad extends StatelessWidget {
             final sideColor = isAC ? Colors.red[600]! : Colors.grey[300]!;
             final ButtonStyle style = isAC
                 ? ButtonStyle(
-                    backgroundColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.hovered)) {
+                    backgroundColor: MaterialStateProperty.resolveWith((states) {
+                      if (states.contains(MaterialState.hovered)) {
                         return Colors.red[600]!;
                       }
                       return Theme.of(context).brightness == Brightness.dark
                           ? const Color(0xFF2C2C2C)
                           : Colors.white;
                     }),
-                    foregroundColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.hovered)) {
+                    foregroundColor: MaterialStateProperty.resolveWith((states) {
+                      if (states.contains(MaterialState.hovered)) {
                         return Colors.white;
                       }
                       return Colors.red[600]!;
                     }),
-                    side: WidgetStateProperty.all(
+                    side: MaterialStateProperty.all(
                       BorderSide(
                         color: Theme.of(context).brightness == Brightness.dark
                             ? Colors.red[400]!
                             : sideColor,
                       ),
                     ),
-                    shape: WidgetStateProperty.all(
+                    shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    elevation: const WidgetStatePropertyAll(0),
+                    elevation: const MaterialStatePropertyAll(0),
                   )
                 : ElevatedButton.styleFrom(
                     backgroundColor:
                         Theme.of(context).brightness == Brightness.dark
-                        ? const Color(0xFF2C2C2C)
-                        : Colors.white,
-                    foregroundColor:
-                        b.color ??
+                            ? const Color(0xFF2C2C2C)
+                            : Colors.white,
+                    foregroundColor: b.color ??
                         (Theme.of(context).brightness == Brightness.dark
                             ? Colors.white
                             : Colors.black87),
@@ -101,7 +101,7 @@ class TimeKeypad extends StatelessWidget {
                   );
             return SizedBox(
               width: w,
-              height: 56,
+              height: targetHeight.clamp(48.0, 80.0),
               child: ElevatedButton(
                 style: style,
                 onPressed: () => onKey(value),
@@ -116,8 +116,7 @@ class TimeKeypad extends StatelessWidget {
                       : TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color:
-                              b.color ??
+                          color: b.color ??
                               (Theme.of(context).brightness == Brightness.dark
                                   ? Colors.white
                                   : Colors.black87),

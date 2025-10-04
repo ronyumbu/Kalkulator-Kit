@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../services/quota_calculation_service.dart';
 import '../widgets/quota_calculator_form.dart';
 import '../widgets/quota_result_dialog.dart';
@@ -19,12 +20,35 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
   DateTime? _selectedDate;
   DateTime _currentDate = DateTime.now();
   Map<String, String> _errors = {};
+  late FocusNode _keyboardFocusNode;
 
   @override
   void dispose() {
     _quotaController.dispose();
     _totalPurchasedController.dispose();
+    _keyboardFocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _keyboardFocusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _keyboardFocusNode.requestFocus();
+    });
+  }
+
+  void _handleRawKey(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final key = event.logicalKey;
+      final ch = event.character ?? key.keyLabel;
+      if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+        _calculateQuota();
+      } else if ((ch.toLowerCase()) == 'r') {
+        _resetForm();
+      }
+    }
   }
 
   Future<void> _selectCurrentDate() async {
@@ -242,7 +266,10 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
         ],
       ),
       drawer: const MainDrawer(),
-      body: SingleChildScrollView(
+      body: RawKeyboardListener(
+        focusNode: _keyboardFocusNode,
+        onKey: _handleRawKey,
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,8 +345,9 @@ class _QuotaCalculatorPageState extends State<QuotaCalculatorPage> {
 
             const SizedBox(height: 32),
           ],
-        ),
-      ),
-    );
+        ), // Column
+      ), // SingleChildScrollView
+    ), // RawKeyboardListener
+  );
   }
 }

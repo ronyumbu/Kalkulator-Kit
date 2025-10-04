@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../services/area_calculation_service.dart';
 import '../../widgets/area_result_dialog.dart';
 
@@ -13,6 +14,7 @@ class _AreaTrianglePageState extends State<AreaTrianglePage> {
   final _formKey = GlobalKey<FormState>();
   final _baseController = TextEditingController();
   final _heightController = TextEditingController();
+  late FocusNode _keyboardFocusNode;
 
   void _showResult(double result) {
     showDialog(
@@ -51,6 +53,29 @@ class _AreaTrianglePageState extends State<AreaTrianglePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _keyboardFocusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _keyboardFocusNode.requestFocus();
+    });
+  }
+
+  void _handleRawKey(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final key = event.logicalKey;
+      final ch = event.character ?? key.keyLabel;
+      if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+        _calculate();
+      } else if ((ch.toLowerCase()) == 'r') {
+        _baseController.clear();
+        _heightController.clear();
+        setState(() {});
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -67,7 +92,10 @@ class _AreaTrianglePageState extends State<AreaTrianglePage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: RawKeyboardListener(
+        focusNode: _keyboardFocusNode,
+        onKey: _handleRawKey,
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,8 +182,9 @@ class _AreaTrianglePageState extends State<AreaTrianglePage> {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        ), // Column
+      ), // SingleChildScrollView
+    ), // RawKeyboardListener
+  );
   }
 }

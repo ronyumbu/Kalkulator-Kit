@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../services/bmi_calculation_service.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/main_drawer.dart';
@@ -13,6 +14,7 @@ class BMICalculatorPage extends StatefulWidget {
 
 class _BMICalculatorPageState extends State<BMICalculatorPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late FocusNode _keyboardFocusNode;
 
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
@@ -23,7 +25,29 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
   void dispose() {
     _heightController.dispose();
     _weightController.dispose();
+    _keyboardFocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _keyboardFocusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _keyboardFocusNode.requestFocus();
+    });
+  }
+
+  void _handleRawKey(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final key = event.logicalKey;
+      final ch = event.character ?? key.keyLabel;
+      if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+        _onCalculate();
+      } else if ((ch.toLowerCase()) == 'r') {
+        _onReset();
+      }
+    }
   }
 
   void _onCalculate() {
@@ -109,7 +133,10 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
         ],
       ),
       drawer: const MainDrawer(),
-      body: SingleChildScrollView(
+      body: RawKeyboardListener(
+        focusNode: _keyboardFocusNode,
+        onKey: _handleRawKey,
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,9 +303,10 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        ), // Column
+      ), // SingleChildScrollView
+    ), // RawKeyboardListener
+  ); // Scaffold
   }
 }
 

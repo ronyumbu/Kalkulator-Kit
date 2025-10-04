@@ -46,10 +46,13 @@ class AreaCalculatorPage extends StatelessWidget {
   drawer: const MainDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1000),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Card(
               elevation: 2,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               color: Colors.pink,
@@ -99,28 +102,41 @@ class AreaCalculatorPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: 1.1,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                children: [
-                  _buildShapeCard(context, 'Persegi', Icons.crop_square, Colors.blue, '/area_square'),
-                  _buildShapeCard(context, 'Persegi Panjang', Icons.rectangle, Colors.green, '/area_rectangle'),
-                  _buildShapeCard(context, 'Segitiga', Icons.change_history, Colors.orange, '/area_triangle'),
-                  _buildShapeCard(context, 'Jajar Genjang', null, Colors.purple, '/area_parallelogram', 
-                    customIcon: ParallelogramIcon(color: Colors.purple, size: 48)),
-                  _buildShapeCard(context, 'Trapesium', null, const Color(0xFFC1311C), '/area_trapezoid',
-                    customIcon: TrapezoidIcon(color: const Color(0xFFC1311C), size: 48)),
-                  _buildShapeCard(context, 'Layang-Layang', null, Colors.cyan, '/area_rhombus',
-                    customIcon: KiteIcon(color: Colors.cyan, size: 48)),
-                  _buildShapeCard(context, 'Lingkaran', Icons.circle, Colors.pink, '/area_circle'),
-                ],
-              ),
-            ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final width = constraints.maxWidth;
+                      int cross = 2;
+                      if (width > 1200) {
+                        cross = 4;
+                      } else if (width > 800) {
+                        cross = 3;
+                      }
+                      return GridView.count(
+                        crossAxisCount: cross,
+                        childAspectRatio: 1.1,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        children: [
+                          _buildShapeCard(context, 'Persegi', Icons.crop_square, Colors.blue, '/area_square'),
+                          _buildShapeCard(context, 'Persegi Panjang', Icons.rectangle, Colors.green, '/area_rectangle'),
+                          _buildShapeCard(context, 'Segitiga', Icons.change_history, Colors.orange, '/area_triangle'),
+                          _buildShapeCard(context, 'Jajar Genjang', null, Colors.purple, '/area_parallelogram', 
+                            customIcon: ParallelogramIcon(color: Colors.purple, size: 48)),
+                          _buildShapeCard(context, 'Trapesium', null, const Color(0xFFC1311C), '/area_trapezoid',
+                            customIcon: TrapezoidIcon(color: const Color(0xFFC1311C), size: 48)),
+                          _buildShapeCard(context, 'Layang-Layang', null, Colors.cyan, '/area_rhombus',
+                            customIcon: KiteIcon(color: Colors.cyan, size: 48)),
+                          _buildShapeCard(context, 'Lingkaran', Icons.circle, Colors.pink, '/area_circle'),
+                        ],
+                      );
+                    },
+                  ),
+                ),
           ],
+            ),
+          ),
         ),
       ),
     );

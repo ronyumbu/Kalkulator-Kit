@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../services/calculation_service.dart';
 import '../widgets/fuel_calculator_form.dart';
 import '../widgets/main_drawer.dart';
@@ -13,6 +14,8 @@ class FuelCalculatorPage extends StatefulWidget {
 
 class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  late FocusNode _keyboardFocusNode;
 
   // Controllers for text fields
   final TextEditingController _distanceController = TextEditingController();
@@ -31,7 +34,29 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
     _priceController.dispose();
     _tollCostController.dispose();
     _parkingCostController.dispose();
+    _keyboardFocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _keyboardFocusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _keyboardFocusNode.requestFocus();
+    });
+  }
+
+  void _handleRawKey(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final key = event.logicalKey;
+      final ch = event.character ?? key.keyLabel;
+      if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+        _calculateCosts();
+      } else if ((ch.toLowerCase()) == 'r') {
+        _resetForm();
+      }
+    }
   }
 
   // Helper function to parse formatted number (remove dots)
@@ -158,7 +183,10 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
         ],
       ),
       drawer: const MainDrawer(),
-      body: SingleChildScrollView(
+      body: RawKeyboardListener(
+        focusNode: _keyboardFocusNode,
+        onKey: _handleRawKey,
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,8 +257,9 @@ class _FuelCalculatorPageState extends State<FuelCalculatorPage> {
 
             const SizedBox(height: 32),
           ],
-        ),
-      ),
-    );
+        ), // Column
+      ), // SingleChildScrollView
+    ), // RawKeyboardListener
+  );
   }
 }
