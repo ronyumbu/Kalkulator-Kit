@@ -182,7 +182,7 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
       if (number != null) {
         return number.toString().replaceAllMapped(
           RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (Match m) => '${m[1]},',
+          (Match m) => '${m[1]}.' ,
         );
       }
     }
@@ -202,6 +202,11 @@ class _BasicCalculatorPageState extends State<BasicCalculatorPage> {
           return;
         }
         if (ch == '.') {
+          _onDecimalPressed();
+          return;
+        }
+        // allow comma to act as decimal separator from keyboard input
+        if (ch == ',') {
           _onDecimalPressed();
           return;
         }
