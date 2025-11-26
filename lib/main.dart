@@ -18,6 +18,7 @@ import 'pages/time_calculator_page.dart';
 import 'pages/bmi_calculator_page.dart';
 import 'pages/date_calculator_page.dart';
 import 'pages/age_calculator_page.dart';
+import 'pages/loan_calculator_page.dart';
 import 'pages/settings_page.dart';
 import 'services/settings_service.dart';
 
@@ -151,6 +152,7 @@ class _MyAppState extends State<MyApp> {
               '/bmi': (context) => const BMICalculatorPage(),
               '/date': (context) => const DateCalculatorPage(),
               '/age': (context) => const AgeCalculatorPage(),
+              '/loan': (context) => const LoanCalculatorPage(),
               '/settings': (context) => const SettingsPage(),
               '/about': (context) => const AboutPage(),
               '/area_calculator': (context) => const AreaCalculatorPage(),

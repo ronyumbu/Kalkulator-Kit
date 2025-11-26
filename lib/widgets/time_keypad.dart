@@ -52,40 +52,41 @@ class TimeKeypad extends StatelessWidget {
             final sideColor = isAC ? Colors.red[600]! : Colors.grey[300]!;
             final ButtonStyle style = isAC
                 ? ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.hovered)) {
+                    backgroundColor: WidgetStateProperty.resolveWith((states) {
+                      if (states.contains(WidgetState.hovered)) {
                         return Colors.red[600]!;
                       }
                       return Theme.of(context).brightness == Brightness.dark
                           ? const Color(0xFF2C2C2C)
                           : Colors.white;
                     }),
-                    foregroundColor: MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.hovered)) {
+                    foregroundColor: WidgetStateProperty.resolveWith((states) {
+                      if (states.contains(WidgetState.hovered)) {
                         return Colors.white;
                       }
                       return Colors.red[600]!;
                     }),
-                    side: MaterialStateProperty.all(
+                    side: WidgetStateProperty.all(
                       BorderSide(
                         color: Theme.of(context).brightness == Brightness.dark
                             ? Colors.red[400]!
                             : sideColor,
                       ),
                     ),
-                    shape: MaterialStateProperty.all(
+                    shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    elevation: const MaterialStatePropertyAll(0),
+                    elevation: const WidgetStatePropertyAll(0),
                   )
                 : ElevatedButton.styleFrom(
                     backgroundColor:
                         Theme.of(context).brightness == Brightness.dark
-                            ? const Color(0xFF2C2C2C)
-                            : Colors.white,
-                    foregroundColor: b.color ??
+                        ? const Color(0xFF2C2C2C)
+                        : Colors.white,
+                    foregroundColor:
+                        b.color ??
                         (Theme.of(context).brightness == Brightness.dark
                             ? Colors.white
                             : Colors.black87),
@@ -116,7 +117,8 @@ class TimeKeypad extends StatelessWidget {
                       : TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: b.color ??
+                          color:
+                              b.color ??
                               (Theme.of(context).brightness == Brightness.dark
                                   ? Colors.white
                                   : Colors.black87),

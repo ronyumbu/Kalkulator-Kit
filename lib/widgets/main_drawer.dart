@@ -133,6 +133,21 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(
+              Icons.account_balance_wallet,
+              color: Colors.green,
+            ),
+            title: const Text(
+              'Kalkulator Cicilan',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Hitung cicilan pinjaman'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/loan');
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.straighten, color: Colors.pink),
             title: const Text(
               'Kalkulator Luas',
